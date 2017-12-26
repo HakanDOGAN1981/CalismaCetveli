@@ -39,6 +39,8 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
     TextView mtxt;
     int gelenID;
 
+    int sabah;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
