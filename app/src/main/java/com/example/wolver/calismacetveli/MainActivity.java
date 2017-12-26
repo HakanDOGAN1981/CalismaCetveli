@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //AYIN İLK GÜNÜNÜ BULMAK(INT)
 
 
-        Toast.makeText(context, ""+ilkGunInt,Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "" + ilkGunInt, Toast.LENGTH_LONG).show();
 
         mtxtAy.setText("" + simdiAy);
 
@@ -395,8 +395,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     soni2 = String.valueOf(i2);
                                 }
 
-                                contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, soni2 + "."
-                                        + sonAyStr + "" + "." + sonYilStr);
+                                contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, soni2 + "." + sonAyStr + "" + "" +
+                                        "." + sonYilStr);
 
                                 Uri uri = getContentResolver().insert(Provider.CETVEL_CONTENT_URI, contentValues);
                             }
