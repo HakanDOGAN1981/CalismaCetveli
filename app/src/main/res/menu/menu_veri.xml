@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/ekle"
+        android:icon="@drawable/ic_check"
+        android:title="Yeni Veri Ekle"></item>
+
+    <item
+        android:id="@+id/geri"
+        android:title="Geri"></item>
+
+</menu>

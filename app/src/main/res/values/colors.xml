@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color1">#030404</color>
+    <color name="color2">#556E7A</color>
+
+    <color name="colorPrimaryBismark">#556E7A</color>
+    <color name="colorPrimaryTransparanBismark">#E6556E7A</color>
+    <color name="colorPrimaryDarkgreen">#030404</color>
+    <color name="colorPrimaryTransparanDarkgreen">#E6030404</color>
+    <color name="colorPrimaryLightAquaSqueeze">#D6D7D6</color>
+    <color name="colorSecondaryDodgerBlue">#19ACF3</color>
+    <color name="colorSecondary2Tacha">#C7BB5C</color>
+    <color name="colorWiteSmoke">#F0F0F0</color>
+
+</resources>

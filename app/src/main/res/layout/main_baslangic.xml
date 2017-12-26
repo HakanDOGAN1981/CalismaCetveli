@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="25dp">
+
+    <include
+        android:id="@+id/toolbarx"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></include>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/Recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:background="@color/colorPrimaryTransparanDarkgreen"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarx"></android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/btnSuz"
+        android:layout_width="118dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginStart="50dp"
+        android:onClick="onClick"
+        android:text="SÜZ"
+        android:textAllCaps="false"
+        android:textColor="@color/degisentextrengi"
+        android:theme="@style/MyButton2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnVeriGiris"
+        android:layout_width="118dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="50dp"
+        android:onClick="onClick"
+        android:text="YENİ VERİ"
+        android:textAllCaps="false"
+        android:textColor="@color/degisentextrengi"
+        android:theme="@style/MyButton2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ayGeri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="1dp"
+        android:backgroundTint="@color/colorPrimaryTransparanDarkgreen"
+        android:tint="@color/colorPrimaryBismark"
+        android:src="@drawable/ic_action_arrow_left"
+        android:tooltipText="Ayı Geri Alır"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/toolbarx"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ayIleri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="1dp"
+        android:backgroundTint="@color/colorPrimaryTransparanDarkgreen"
+        android:tint="@color/colorPrimaryBismark"
+        android:src="@drawable/ic_action_arrow_right"
+        android:tooltipText="Ayı İleri Alır"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/toolbarx"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtAy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="16dp"
+        android:text=""
+        app:layout_constraintEnd_toStartOf="@+id/ayIleri"
+        app:layout_constraintStart_toEndOf="@+id/ayGeri"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

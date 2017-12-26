@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Çalışma Cetveli</string>
+    <string name="title_activity_veri_girisi">Yeni Veri Girişi</string>
+
+    <string-array name="spinner_tur">
+        <item>Giriş Türünü Seçiniz</item>
+        <item>Yolculuk</item>
+        <item>Konaklama</item>
+        <item>Dosya İncelemesi</item>
+        <item>Teftiş</item>
+        <item>Bildirim</item>
+        <item>Rapor</item>
+        <item>Yazı</item>
+        <item>Diğer</item>
+    </string-array>
+
+    <string name="title_activity_suzgec">Suzgec</string>
+
+    <string-array name="spinner_ay">
+        <item>Seçiniz</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
+    <string-array name="spinner_yil">
+        <item>Seçiniz</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+    </string-array>
+
+
+</resources>
