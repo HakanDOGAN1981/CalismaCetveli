@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -70,6 +71,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int ilkGunInt;
     int ilkCumartesi;
 
+    String shrTur;
+    String shrTrAy;
+    String shrTrYil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,15 +86,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gelenVeriKontrolu();
         tarihKontorolu();
 
+        sharedPrefencesAl();
 
         // RECYCLERVIEW TANITIMI
         mRecyclerView = (RecyclerView) findViewById(R.id.Recyclerview);
 
-        if (alinan.equalsIgnoreCase("")) {
+        /////////////////SÜZME OLUP OLMADIĞINI KONTROL EDİYOR. ONAGÖRE YA SÜZYOR YADA NE VARSA GETİRİYOR
+
+
+        if (alinan.equalsIgnoreCase("") || shrTur.equalsIgnoreCase("")) {
             dataguncelle();
         } else {
             suzDataguncelle();
         }
+        /////////////////SÜZME OLUP OLMADIĞINI KONTROL EDİYOR. ONAGÖRE YA SÜZYOR YADA NE VARSA GETİRİYOR
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
@@ -319,24 +329,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .TblCetvelClass.CETVEL_TARIH_BAS_1};
 
         //1. ihtimal Tür boş , ay ve yıla dolu
-        if (gelenTur.equalsIgnoreCase("") && !gelenAy.equalsIgnoreCase("") && !gelenYil.equalsIgnoreCase("")) {
+        if (shrTur.equalsIgnoreCase("") && !shrTrAy.equalsIgnoreCase("") && !shrTrYil.equalsIgnoreCase("")) {
             selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
-            selectionArgs = new String[]{"%." + gelenAy + "." + gelenYil + "%"};
+            selectionArgs = new String[]{"%." + shrTrAy + "." + shrTrYil + "%"};
         }
 
         //2. ihtimal Tür dolu, ay ve yıl boş
 
-        if (!gelenTur.equalsIgnoreCase("") && gelenAy.equalsIgnoreCase("") && gelenYil.equalsIgnoreCase("")) {
+        if (!shrTur.equalsIgnoreCase("") && shrTrAy.equalsIgnoreCase("") && shrTrYil.equalsIgnoreCase("")) {
             selection = Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
-            selectionArgs = new String[]{"%" + gelenTur + "%"};
+            selectionArgs = new String[]{"%" + shrTur + "%"};
         }
 
 
         //3. ihtimal üçüde dolu
 
-        if (!gelenTur.equalsIgnoreCase("") && !gelenAy.equalsIgnoreCase("") && !gelenYil.equalsIgnoreCase("")) {
+        if (!shrTur.equalsIgnoreCase("") && !shrTrAy.equalsIgnoreCase("") && !shrTrYil.equalsIgnoreCase("")) {
             selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ? AND " + Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
-            selectionArgs = new String[]{"%." + gelenAy + "." + gelenYil + "%", "%" + gelenTur + "%"};
+            selectionArgs = new String[]{"%." + shrTrAy + "." + shrTrYil + "%", "%" + shrTur + "%"};
         }
 
 
@@ -452,5 +462,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         cursor.close();
     }
+
+    public void sharedPrefencesAl() {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("share", MODE_PRIVATE);
+        shrTur = sharedPreferences.getString("tur", null);
+        shrTrAy = sharedPreferences.getString("trAy", null);
+        shrTrYil = sharedPreferences.getString("trYil", null);
+    }
+
+
+
+    ////////////////////////////////ESKİ SÜZME İŞLEMİ///////////////////////////
+   /* //1. ihtimal Tür boş , ay ve yıla dolu
+        if (gelenTur.equalsIgnoreCase("") && !gelenAy.equalsIgnoreCase("") && !gelenYil.equalsIgnoreCase("")) {
+        selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
+        selectionArgs = new String[]{"%." + gelenAy + "." + gelenYil + "%"};
+    }
+
+    //2. ihtimal Tür dolu, ay ve yıl boş
+
+        if (!gelenTur.equalsIgnoreCase("") && gelenAy.equalsIgnoreCase("") && gelenYil.equalsIgnoreCase("")) {
+        selection = Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
+        selectionArgs = new String[]{"%" + gelenTur + "%"};
+    }
+
+
+    //3. ihtimal üçüde dolu
+
+        if (!gelenTur.equalsIgnoreCase("") && !gelenAy.equalsIgnoreCase("") && !gelenYil.equalsIgnoreCase("")) {
+        selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ? AND " + Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
+        selectionArgs = new String[]{"%." + gelenAy + "." + gelenYil + "%", "%" + gelenTur + "%"};
+    }*/
 }
 

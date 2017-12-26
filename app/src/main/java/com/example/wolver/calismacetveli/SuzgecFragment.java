@@ -1,7 +1,9 @@
 package com.example.wolver.calismacetveli;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -135,6 +137,7 @@ public class SuzgecFragment extends android.support.v4.app.DialogFragment {
         Main.putExtra("tur", mSpinnerTur.getSelectedItem().toString());
         Main.putExtra("ay", mSpinnerAy.getSelectedItem().toString());
         Main.putExtra("yil", mSpinnerYil.getSelectedItem().toString());
+        sharedPrefencesOlustur();
         startActivity(Main);
     }
 
@@ -216,6 +219,15 @@ public class SuzgecFragment extends android.support.v4.app.DialogFragment {
         return ay;
     }
 
+    public void sharedPrefencesOlustur(){
+
+        SharedPreferences sharedPreferences;
+        sharedPreferences = getContext().getSharedPreferences("share", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putString("tur",mSpinnerTur.getSelectedItem().toString());
+        sharedPreferences.edit().putString("trAy",mSpinnerAy.getSelectedItem().toString());
+        sharedPreferences.edit().putString("trYil",mSpinnerYil.getSelectedItem().toString());
+        sharedPreferences.edit().commit();
+    }
 }
 
 

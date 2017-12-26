@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -264,9 +265,20 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
         contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, mBtnBas1.getText().toString());
         contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BIT_1, mBtnBit1.getText().toString());
 
+        sharedPrefencesOlustur();
+
         return contentValues;
     }
 
+    public void sharedPrefencesOlustur() {
+
+        SharedPreferences sharedPreferences;
+        sharedPreferences = context.getSharedPreferences("share", MODE_PRIVATE);
+        sharedPreferences.edit().putString("tur", mSpinnerTur1.getSelectedItem().toString());
+        sharedPreferences.edit().putString("trAy", mBtnBas1.getText().toString().substring(3, 5));
+        sharedPreferences.edit().putString("trYil", mBtnBas1.getText().toString().substring(6, mBtnBas1.getText().length()));
+        sharedPreferences.edit().commit();
+    }
 
     public void veriGirisi() {
         if (gelenID != 0) {
