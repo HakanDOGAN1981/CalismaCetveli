@@ -272,12 +272,12 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
     public void sharedPrefencesOlustur() {
 
-        SharedPreferences sharedPreferences;
-        sharedPreferences = context.getSharedPreferences("share", MODE_PRIVATE);
-        sharedPreferences.edit().putString("tur", mSpinnerTur1.getSelectedItem().toString());
-        sharedPreferences.edit().putString("trAy", mBtnBas1.getText().toString().substring(3, 5));
-        sharedPreferences.edit().putString("trYil", mBtnBas1.getText().toString().substring(6, mBtnBas1.getText().length()));
-        sharedPreferences.edit().commit();
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("tur", mSpinnerTur1.getSelectedItem().toString());
+        editor.putString("trAy", mBtnBas1.getText().toString().substring(3, 5));
+        editor.putString("trYil", mBtnBas1.getText().toString().substring(6, mBtnBas1.getText().length()));
+        editor.apply();
     }
 
     public void veriGirisi() {

@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int ilkGunInt;
     int ilkCumartesi;
 
-    String shrTur;
+    int shrGelenInt;
+    String shrGelenTur;
     String shrTrAy;
     String shrTrYil;
 
@@ -93,12 +94,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         /////////////////SÜZME OLUP OLMADIĞINI KONTROL EDİYOR. ONAGÖRE YA SÜZYOR YADA NE VARSA GETİRİYOR
 
+        Toast.makeText(this, "shrGelenInt: " + shrGelenInt, Toast.LENGTH_SHORT).show();
 
-        if (alinan.equalsIgnoreCase("") || shrTur.equalsIgnoreCase("")) {
-            dataguncelle();
-        } else {
+//        if (/*alinan.equalsIgnoreCase("") ||*/ shrGelenInt == 4) {
+//            dataguncelle();
+//        } else {
             suzDataguncelle();
-        }
+//        }
         /////////////////SÜZME OLUP OLMADIĞINI KONTROL EDİYOR. ONAGÖRE YA SÜZYOR YADA NE VARSA GETİRİYOR
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -216,6 +218,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tumCetvelListe = tumCetvelListe();//METOD AŞAĞIDA tumCetvelListe()
         mRecAdapter = new RecAdapter(this, tumCetvelListe);
         mRecyclerView.setAdapter(mRecAdapter);
+        Toast.makeText(this, "Data Güncellendi", Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -329,25 +333,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .TblCetvelClass.CETVEL_TARIH_BAS_1};
 
         //1. ihtimal Tür boş , ay ve yıla dolu
-        if (shrTur.equalsIgnoreCase("") && !shrTrAy.equalsIgnoreCase("") && !shrTrYil.equalsIgnoreCase("")) {
+//        if (shrGelenInt == 1) {
             selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
             selectionArgs = new String[]{"%." + shrTrAy + "." + shrTrYil + "%"};
-        }
+            Toast.makeText(this, "Süzülen: " + "%." + shrTrAy + "." + shrTrYil + "%", Toast.LENGTH_SHORT).show();
+//        }
+        Toast.makeText(this, "Süzülen: " + "%." + shrTrAy + "." + shrTrYil + "%", Toast.LENGTH_SHORT).show();
 
         //2. ihtimal Tür dolu, ay ve yıl boş
 
-        if (!shrTur.equalsIgnoreCase("") && shrTrAy.equalsIgnoreCase("") && shrTrYil.equalsIgnoreCase("")) {
-            selection = Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
-            selectionArgs = new String[]{"%" + shrTur + "%"};
-        }
-
-
-        //3. ihtimal üçüde dolu
-
-        if (!shrTur.equalsIgnoreCase("") && !shrTrAy.equalsIgnoreCase("") && !shrTrYil.equalsIgnoreCase("")) {
-            selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ? AND " + Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
-            selectionArgs = new String[]{"%." + shrTrAy + "." + shrTrYil + "%", "%" + shrTur + "%"};
-        }
+//        if (shrGelenInt == 2) {
+//            selection = Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
+//            selectionArgs = new String[]{"%" + shrGelenTur + "%"};
+//            Toast.makeText(this, "Süzülen: " + "%." + shrTrAy + "." + shrTrYil + "%", Toast.LENGTH_SHORT).show();
+//        }
+//
+//
+//        //3. ihtimal üçüde dolu
+//
+//        if (shrGelenInt == 3) {
+//            selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ? AND " + Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
+//            selectionArgs = new String[]{"%." + shrTrAy + "." + shrTrYil + "%", "%" + shrGelenTur + "%"};
+//            Toast.makeText(this, "Süzülen: " + "%." + shrTrAy + "." + shrTrYil + "%", Toast.LENGTH_SHORT).show();
+//        }
 
 
         Cursor cursor = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, selectionArgs, null);
@@ -466,11 +474,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void sharedPrefencesAl() {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("share", MODE_PRIVATE);
-        shrTur = sharedPreferences.getString("tur", null);
-        shrTrAy = sharedPreferences.getString("trAy", null);
-        shrTrYil = sharedPreferences.getString("trYil", null);
+        shrGelenInt = sharedPreferences.getInt("secilen", 4);
+        shrGelenTur = sharedPreferences.getString("shrTur", "Sonuç Yok");
+        shrTrAy = sharedPreferences.getString("shrAy", "Sonuç Yok");
+        shrTrYil = sharedPreferences.getString("shrYil", "Sonuç Yok");
     }
-
 
 
     ////////////////////////////////ESKİ SÜZME İŞLEMİ///////////////////////////

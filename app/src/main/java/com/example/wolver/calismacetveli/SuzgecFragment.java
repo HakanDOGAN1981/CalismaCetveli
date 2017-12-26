@@ -1,7 +1,6 @@
 package com.example.wolver.calismacetveli;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,12 +19,18 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class SuzgecFragment extends android.support.v4.app.DialogFragment {
 
     private Spinner mSpinnerTur, mSpinnerYil, mSpinnerAy;
     private ImageButton mImgKapat;
     private Button mBtnSuz;
     private CheckBox mcheckBox;
+    public static String shrTur;
+    public static String shrAy;
+    public static String shrYil;
+
 
     int ay, yil;
 
@@ -219,14 +224,57 @@ public class SuzgecFragment extends android.support.v4.app.DialogFragment {
         return ay;
     }
 
-    public void sharedPrefencesOlustur(){
+    public void sharedPrefencesOlustur() {
 
-        SharedPreferences sharedPreferences;
-        sharedPreferences = getContext().getSharedPreferences("share", Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString("tur",mSpinnerTur.getSelectedItem().toString());
-        sharedPreferences.edit().putString("trAy",mSpinnerAy.getSelectedItem().toString());
-        sharedPreferences.edit().putString("trYil",mSpinnerYil.getSelectedItem().toString());
-        sharedPreferences.edit().commit();
+        SharedPreferences preferences = getActivity().getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+
+        String spnTur = mSpinnerTur.getSelectedItem().toString();
+        String spnAy = mSpinnerAy.getSelectedItem().toString();
+        String spnYil = mSpinnerYil.getSelectedItem().toString();
+
+
+
+        //1. ihtimal Tür boş , ay ve yıla dolu
+        if (spnTur.equalsIgnoreCase("Giriş Türünü Seçiniz") && !spnAy.equalsIgnoreCase("Seçiniz")
+                && !spnYil.equalsIgnoreCase("Seçiniz")) {
+            editor.putInt("secilen", 1);
+            editor.putString("shrTur",spnTur);
+            editor.putString("shrAy",spnAy);
+            editor.putString("shrYil",spnYil);
+        }
+
+        //2. ihtimal Tür dolu, ay ve yıl boş
+        if (!spnTur.equalsIgnoreCase("Giriş Türünü Seçiniz") && spnAy.equalsIgnoreCase("Seçiniz")
+                && spnYil.equalsIgnoreCase("Seçiniz")) {
+            editor.putInt("secilen", 2);
+            editor.putString("shrTur",spnTur);
+            editor.putString("shrAy",spnAy);
+            editor.putString("shrYil",spnYil);
+        }
+
+        //3. ihtimal üçüde dolu
+        if (!spnTur.equalsIgnoreCase("Giriş Türünü Seçiniz") && !spnAy.equalsIgnoreCase("Seçiniz")
+                && !spnYil.equalsIgnoreCase("Seçiniz")) {
+            editor.putInt("secilen", 3);
+            editor.putString("shrTur",spnTur);
+            editor.putString("shrAy",spnAy);
+            editor.putString("shrYil",spnYil);
+        }
+
+        //4. ihtimal üçüde boş
+        if (spnTur.equalsIgnoreCase("Giriş Türünü Seçiniz") && spnAy.equalsIgnoreCase("Seçiniz")
+                && spnYil.equalsIgnoreCase("Seçiniz")) {
+            editor.putInt("secilen", 4);
+            editor.putString("shrTur",spnTur);
+            editor.putString("shrAy",spnAy);
+            editor.putString("shrYil",spnYil);
+        }
+
+        editor.apply();
+
+
     }
 }
 
