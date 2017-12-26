@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-     <TextView
+    <TextView
         android:id="@+id/textTarih"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         android:singleLine="true"
         android:text="Tarih"
         android:textStyle="bold"
-        android:textColor="@color/colorWiteSmoke"/>
+        android:textColor="@color/colorWiteSmoke" />
 
     <TextView
         android:id="@+id/textIcerik"
@@ -26,6 +26,6 @@
         android:singleLine="true"
         android:text="İçerik"
         android:textStyle="bold"
-        android:textColor="@color/colorWiteSmoke"/>
+        android:textColor="@color/colorWiteSmoke" />
 
 </LinearLayout>

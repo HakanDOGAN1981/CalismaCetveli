@@ -15,7 +15,6 @@
         android:layout_below="@+id/toolbarx"></ImageView>
 
 
-
     <include
         layout="@layout/main_baslangic"
         android:layout_width="match_parent"

@@ -1,59 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
-        android:layout_marginBottom="43dp"
-        android:padding="2dp"
+    <TextView android:id="@+id/textView" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginTop="43dp" android:layout_marginBottom="43dp" android:padding="2dp"
         android:text="Yeni Veri Girişi" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignTop="@+id/textView"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_alignParentRight="true"
-        android:background="@null"
-        android:onClick="onClick"
-        android:src="@drawable/ic_close"
+    <ImageButton android:id="@+id/imageButton" android:layout_width="20dp" android:layout_height="20dp"
+        android:layout_alignTop="@+id/textView" android:layout_alignBottom="@+id/textView" android:layout_alignParentRight="true"
+        android:background="@null" android:onClick="onClick" android:src="@drawable/ic_close"
         android:tint="@color/colorSecondaryDodgerBlue" />
 
-    <EditText
-        android:id="@+id/edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView"
-        android:layout_below="@+id/textView"
-        android:layout_marginTop="8dp" />
+    <EditText android:id="@+id/edittext" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView" android:layout_below="@+id/textView" android:layout_marginTop="8dp" />
 
-    <DatePicker
-        android:id="@+id/datepicker"
-        android:layout_width="match_parent"
-        android:layout_height="310dp"
-        android:layout_above="@+id/button"
-        android:layout_alignEnd="@+id/edittext"
-        android:layout_alignStart="@+id/edittext"
-        android:layout_marginBottom="26dp"
-        android:onClick="onClick"></DatePicker>
+    <DatePicker android:id="@+id/datepicker" android:layout_width="match_parent" android:layout_height="310dp"
+        android:layout_above="@+id/button" android:layout_alignEnd="@+id/edittext" android:layout_alignStart="@+id/edittext"
+        android:layout_marginBottom="26dp" android:onClick="onClick"></DatePicker>
 
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp"
-        android:onClick="onClick"
-        android:text="Kaydet"
-        android:textColor="@color/degisentextrengi"
+    <Button android:id="@+id/button" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" android:layout_marginBottom="13dp"
+        android:onClick="onClick" android:text="Kaydet" android:textColor="@color/degisentextrengi"
         android:theme="@style/MyButton" />
 
 </RelativeLayout>

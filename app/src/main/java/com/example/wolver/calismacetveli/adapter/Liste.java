@@ -17,7 +17,7 @@ public class Liste {
 
 
     //   BURASI MANUEL
-    public Liste(){
+    public Liste() {
     }
     //   BURASI MANUEL
 

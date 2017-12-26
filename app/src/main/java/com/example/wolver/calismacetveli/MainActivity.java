@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //AYIN İLK GÜNÜNÜ BULMAK(STRING)
 
         //AYIN İLK GÜNÜNÜ BULMAK(INT)
-        int ilkGunInt=calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        int ilkGunInt = calendar.get(Calendar.DAY_OF_WEEK) - 1;
         //AYIN İLK GÜNÜNÜ BULMAK(INT)
 
         Toast.makeText(context, "İlk Gün: " + ilkGunInt, Toast.LENGTH_LONG).show();
