@@ -39,8 +39,6 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
     TextView mtxt;
     int gelenID;
 
-    int sabah;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +109,6 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
         });
 
         gelenVeri();
-
     }
 
 
@@ -327,7 +324,9 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
 
     public void gelenVeri() {
-
+        //GELEN VERİ VARSA BURASI ÇALIŞIYOR
+        //GELEN VEWRİ YOKSA ONCREATE İŞLEMLERİ DEVAM EDİYOR.
+        //SADECE BOŞ VERİ GİRİŞ EKRANI AÇILIYOR.
         try {
 
             String veri = getIntent().getExtras().getString("veri");

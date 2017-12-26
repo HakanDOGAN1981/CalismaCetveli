@@ -34,6 +34,7 @@ import com.example.wolver.calismacetveli.data.Sabitler;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -104,8 +105,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.addOnItemTouchListener(new RecListener(this, mRecyclerView, new RecListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Liste guncellenen = tumCetvelListe.get(position);
-                int guncellenenId = guncellenen.getId();
+                int guncellenenId;
+                if (tumCetvelListe.size() != 0) {
+                    Liste guncellenen = tumCetvelListe.get(position);
+                    guncellenenId = guncellenen.getId();
+                } else {
+                    Liste guncellenen = suzTumCetvelListe.get(position);
+                    guncellenenId = guncellenen.getId();
+                }
 
                 Intent veri = new Intent(context, VeriGirisi.class);
                 veri.putExtra("veri", String.valueOf(guncellenenId));
@@ -127,6 +134,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         simdiAy = month + 1;
         int simdiYil = simdi.get(Calendar.YEAR);
         sonYilStr = String.valueOf(simdiYil);
+
+        //AYIN İLK GÜNÜNÜ BULMAK(STRING)
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DATE, 1);
+        String ilkGunStr = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+        //AYIN İLK GÜNÜNÜ BULMAK(STRING)
+
+        //AYIN İLK GÜNÜNÜ BULMAK(INT)
+        int ilkGunInt=calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        //AYIN İLK GÜNÜNÜ BULMAK(INT)
+
+        Toast.makeText(context, "İlk Gün: " + ilkGunInt, Toast.LENGTH_LONG).show();
 
         mtxtAy.setText("" + simdiAy);
 
@@ -210,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             cursor.close();
         }
         Toast.makeText(this, "Kayıt Sayısı: " + tumCetvelListe.size(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "SORTORDER TUMCETVEL", Toast.LENGTH_SHORT).show();
         return tumCetvelListe;
     }
 
@@ -356,11 +376,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
-                            Calendar simdi = Calendar.getInstance();
                             ContentValues contentValues = new ContentValues();
 
+                            String soni2;
                             for (int i2 = 1; i2 <= aydakiGunSayısı; i2++) {
-                                contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, "" + i2 + "."
+
+                                if (String.valueOf(i2).length() < 2) {
+                                    soni2 = String.valueOf(i2);
+                                    soni2 = "0" + soni2;
+                                } else {
+                                    soni2 = String.valueOf(i2);
+                                }
+                                contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, soni2 + "."
                                         + sonAyStr + "" + "." + sonYilStr);
                                 Uri uri = getContentResolver().insert(Provider.CETVEL_CONTENT_URI, contentValues);
                             }

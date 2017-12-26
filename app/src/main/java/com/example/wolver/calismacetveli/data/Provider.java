@@ -62,17 +62,17 @@ public class Provider extends ContentProvider {
 
             case 1:
                 cursor = db.query(Sabitler.TblCetvelClass.TBL_CETVEL, columns, selection, selectionArgs, null,
-                        null, null);
+                        null, Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " ASC");
                 break;
 
             case 2:
                 cursor = db.query(Sabitler.TblGiderClass.TBL_GIDER, columns, selection, selectionArgs, null, null,
-                        null);
+                        Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " ASC");
                 break;
 
             case 3:
                 cursor = db.query(Sabitler.TblTurClass.TBL_TUR, columns, selection, selectionArgs, null, null,
-                        null);
+                        Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " ASC");
                 break;
         }
         return cursor;
