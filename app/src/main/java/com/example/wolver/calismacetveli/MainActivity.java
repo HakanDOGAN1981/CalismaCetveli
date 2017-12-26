@@ -58,11 +58,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     SQLiteDatabase db;
     String alinan, gelenTur, gelenYil, gelenAy;
+
+    Calendar calendar;
+
     String sonAyStr;
     String sonYilStr;
+    String ilkGunStr;
+
     int aydakiGunSayısı;
     int simdiAy;
-
+    int ilkGunInt;
+    int ilkCumartesi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,16 +142,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sonYilStr = String.valueOf(simdiYil);
 
         //AYIN İLK GÜNÜNÜ BULMAK(STRING)
-        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         calendar.set(Calendar.DATE, 1);
-        String ilkGunStr = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+        ilkGunStr = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
         //AYIN İLK GÜNÜNÜ BULMAK(STRING)
 
-        //AYIN İLK GÜNÜNÜ BULMAK(INT)
-        int ilkGunInt = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        //AYIN İLK GÜNÜNÜ BULMAK(INT)-HAFTALIK DEĞER
+        ilkGunInt = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        int ilkCumartesiGerekliGun = 6 - ilkGunInt;
+        ilkCumartesi = 1 + ilkCumartesiGerekliGun;
         //AYIN İLK GÜNÜNÜ BULMAK(INT)
 
-        Toast.makeText(context, "İlk Gün: " + ilkGunInt, Toast.LENGTH_LONG).show();
+
+        Toast.makeText(context, ""+ilkGunInt,Toast.LENGTH_LONG).show();
 
         mtxtAy.setText("" + simdiAy);
 
@@ -228,8 +237,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             cursor.close();
         }
-        Toast.makeText(this, "Kayıt Sayısı: " + tumCetvelListe.size(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "SORTORDER TUMCETVEL", Toast.LENGTH_SHORT).show();
         return tumCetvelListe;
     }
 
@@ -387,9 +394,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 } else {
                                     soni2 = String.valueOf(i2);
                                 }
+
                                 contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, soni2 + "."
                                         + sonAyStr + "" + "." + sonYilStr);
+
                                 Uri uri = getContentResolver().insert(Provider.CETVEL_CONTENT_URI, contentValues);
+                            }
+
+
+                            String soni3;
+                            ContentValues contentValues2 = new ContentValues();
+
+                            for (int i3 = ilkCumartesi; i3 <= aydakiGunSayısı; i3 += 7) {
+                                if (String.valueOf(i3).length() < 2) {
+                                    soni3 = String.valueOf(i3);
+                                    soni3 = "0" + soni3;
+                                } else {
+                                    soni3 = String.valueOf(i3);
+                                }
+
+                                String select = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " = ?";
+                                String[] args = {soni3 + "." + sonAyStr + "." + sonYilStr};
+
+                                contentValues2.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, "Cumartesi");
+                                getContentResolver().update(Provider.CETVEL_CONTENT_URI, contentValues2, select, args);
+                            }
+
+                            String soni4;
+                            ContentValues contentValues3 = new ContentValues();
+
+                            for (int i4 = ilkCumartesi + 1; i4 <= aydakiGunSayısı; i4 = i4 + 7) {
+                                if (String.valueOf(i4).length() < 2) {
+                                    soni4 = String.valueOf(i4);
+                                    soni4 = "0" + soni4;
+                                } else {
+                                    soni4 = String.valueOf(i4);
+                                }
+                                String select = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " = ?";
+                                String[] args = {soni4 + "." + sonAyStr + "." + sonYilStr};
+
+                                contentValues3.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, "Pazar");
+                                getContentResolver().update(Provider.CETVEL_CONTENT_URI, contentValues3, select, args);
                             }
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
