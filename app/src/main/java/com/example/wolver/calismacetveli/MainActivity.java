@@ -94,13 +94,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         /////////////////SÜZME OLUP OLMADIĞINI KONTROL EDİYOR. ONAGÖRE YA SÜZYOR YADA NE VARSA GETİRİYOR
 
-        Toast.makeText(this, "shrGelenInt: " + shrGelenInt, Toast.LENGTH_SHORT).show();
-
-//        if (/*alinan.equalsIgnoreCase("") ||*/ shrGelenInt == 4) {
-//            dataguncelle();
-//        } else {
+        if (shrGelenInt == 4) {
+            dataguncelle();
+        } else {
             suzDataguncelle();
-//        }
+        }
         /////////////////SÜZME OLUP OLMADIĞINI KONTROL EDİYOR. ONAGÖRE YA SÜZYOR YADA NE VARSA GETİRİYOR
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -165,9 +163,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ilkCumartesi = 1 + ilkCumartesiGerekliGun;
         //AYIN İLK GÜNÜNÜ BULMAK(INT)
 
-
-        Toast.makeText(context, "" + ilkGunInt, Toast.LENGTH_LONG).show();
-
         mtxtAy.setText("" + simdiAy);
 
         if (String.valueOf(month).length() < 2) {
@@ -218,8 +213,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tumCetvelListe = tumCetvelListe();//METOD AŞAĞIDA tumCetvelListe()
         mRecAdapter = new RecAdapter(this, tumCetvelListe);
         mRecyclerView.setAdapter(mRecAdapter);
-        Toast.makeText(this, "Data Güncellendi", Toast.LENGTH_SHORT).show();
-
     }
 
 
@@ -333,29 +326,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .TblCetvelClass.CETVEL_TARIH_BAS_1};
 
         //1. ihtimal Tür boş , ay ve yıla dolu
-//        if (shrGelenInt == 1) {
+        if (shrGelenInt == 1) {
             selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
             selectionArgs = new String[]{"%." + shrTrAy + "." + shrTrYil + "%"};
-            Toast.makeText(this, "Süzülen: " + "%." + shrTrAy + "." + shrTrYil + "%", Toast.LENGTH_SHORT).show();
-//        }
-        Toast.makeText(this, "Süzülen: " + "%." + shrTrAy + "." + shrTrYil + "%", Toast.LENGTH_SHORT).show();
+        }
 
         //2. ihtimal Tür dolu, ay ve yıl boş
 
-//        if (shrGelenInt == 2) {
-//            selection = Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
-//            selectionArgs = new String[]{"%" + shrGelenTur + "%"};
-//            Toast.makeText(this, "Süzülen: " + "%." + shrTrAy + "." + shrTrYil + "%", Toast.LENGTH_SHORT).show();
-//        }
-//
-//
-//        //3. ihtimal üçüde dolu
-//
-//        if (shrGelenInt == 3) {
-//            selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ? AND " + Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
-//            selectionArgs = new String[]{"%." + shrTrAy + "." + shrTrYil + "%", "%" + shrGelenTur + "%"};
-//            Toast.makeText(this, "Süzülen: " + "%." + shrTrAy + "." + shrTrYil + "%", Toast.LENGTH_SHORT).show();
-//        }
+        if (shrGelenInt == 2) {
+            selection = Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
+            selectionArgs = new String[]{"%" + shrGelenTur + "%"};
+        }
+
+
+        //3. ihtimal üçüde dolu
+
+        if (shrGelenInt == 3) {
+            selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ? AND " + Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
+            selectionArgs = new String[]{"%." + shrTrAy + "." + shrTrYil + "%", "%" + shrGelenTur + "%"};
+        }
 
 
         Cursor cursor = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, selectionArgs, null);
@@ -372,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             cursor.close();
         }
-        Toast.makeText(this, "Süzülen Kayıt Sayısı: " + suzTumCetvelListe.size(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Süzülen Kayıt Sayısı: " + suzTumCetvelListe.size(), Toast.LENGTH_SHORT).show();
         return suzTumCetvelListe;
 
     }
@@ -458,7 +447,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
 
-                            Toast.makeText(context, "Kayıt Yapılan Sayı: " + aydakiGunSayısı, Toast.LENGTH_LONG).show();
+//                            Toast.makeText(context, "Kayıt Yapılan Sayı: " + aydakiGunSayısı, Toast.LENGTH_LONG).show();
                         }
                     })
                     .setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
@@ -473,34 +462,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void sharedPrefencesAl() {
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("share", MODE_PRIVATE);
-        shrGelenInt = sharedPreferences.getInt("secilen", 4);
-        shrGelenTur = sharedPreferences.getString("shrTur", "Sonuç Yok");
-        shrTrAy = sharedPreferences.getString("shrAy", "Sonuç Yok");
-        shrTrYil = sharedPreferences.getString("shrYil", "Sonuç Yok");
+        SharedPreferences preferences = context.getSharedPreferences("share", MODE_PRIVATE);
+        shrGelenInt = preferences.getInt("secilen", 4);
+        shrGelenTur = preferences.getString("shrTur", "Sonuç Yok");
+        shrTrAy = preferences.getString("shrAy", "Sonuç Yok");
+        shrTrYil = preferences.getString("shrYil", "Sonuç Yok");
     }
-
-
-    ////////////////////////////////ESKİ SÜZME İŞLEMİ///////////////////////////
-   /* //1. ihtimal Tür boş , ay ve yıla dolu
-        if (gelenTur.equalsIgnoreCase("") && !gelenAy.equalsIgnoreCase("") && !gelenYil.equalsIgnoreCase("")) {
-        selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
-        selectionArgs = new String[]{"%." + gelenAy + "." + gelenYil + "%"};
-    }
-
-    //2. ihtimal Tür dolu, ay ve yıl boş
-
-        if (!gelenTur.equalsIgnoreCase("") && gelenAy.equalsIgnoreCase("") && gelenYil.equalsIgnoreCase("")) {
-        selection = Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
-        selectionArgs = new String[]{"%" + gelenTur + "%"};
-    }
-
-
-    //3. ihtimal üçüde dolu
-
-        if (!gelenTur.equalsIgnoreCase("") && !gelenAy.equalsIgnoreCase("") && !gelenYil.equalsIgnoreCase("")) {
-        selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ? AND " + Sabitler.TblCetvelClass.CETVEL_TUR_1 + " LIKE ?";
-        selectionArgs = new String[]{"%." + gelenAy + "." + gelenYil + "%", "%" + gelenTur + "%"};
-    }*/
 }
 

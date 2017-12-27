@@ -39,6 +39,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
     Context context = this;
     TextView mtxt;
     int gelenID;
+    int cursorCount2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,8 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
         eklenenListviewTanitimi();
         autocomplateText();
+
+        gelenVeriVarsaYukle();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +64,6 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.spinner_tur, android.R.layout
                 .simple_dropdown_item_1line);
         mSpinnerTur1.setAdapter(spinnerAdapter);
-
 
         mSpinnerTur1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -108,8 +110,6 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
             }
         });
-
-        gelenVeri();
     }
 
 
@@ -117,7 +117,6 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
         mTxtAciklama1.setText(mSpinnerTur1.getSelectedItem().toString() + ": ");
     }
-
 
     private void autocomplateText() {
 
@@ -134,7 +133,6 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
         mTxtGider1.setAdapter(arrayAdapterGider);
     }
 
-
     private void eklenenListviewTanitimi() {
 
         mSpinnerTur1 = (Spinner) findViewById(R.id.spinnerTur1);
@@ -145,7 +143,6 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
         mtxt = (TextView) findViewById(R.id.mtxt);
     }
-
 
     // MENÜ İŞLEMLERİ
     @Override
@@ -177,6 +174,16 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
     }
     // MENÜ İŞLEMLERİ
 
+    @Override
+    public void onClick(View view) {
+
+        if (view.getId() == R.id.btnTrBas1) {
+            setmBtnBas1();
+        }
+        if (view.getId() == R.id.btnTrBit1) {
+            setmBtnBit1();
+        }
+    }
 
     public void setmBtnBas1() {
 
@@ -255,92 +262,10 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    public ContentValues valuesYukleme() {
-
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(Sabitler.TblCetvelClass.CETVEL_TUR_1, mSpinnerTur1.getSelectedItem().toString());
-        contentValues.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, mTxtAciklama1.getText().toString());
-        contentValues.put(Sabitler.TblCetvelClass.CETVEL_GIDER_1, mTxtGider1.getText().toString());
-        contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, mBtnBas1.getText().toString());
-        contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BIT_1, mBtnBit1.getText().toString());
-
-        sharedPrefencesOlustur();
-
-        return contentValues;
-    }
-
-    public void sharedPrefencesOlustur() {
-
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("tur", mSpinnerTur1.getSelectedItem().toString());
-        editor.putString("trAy", mBtnBas1.getText().toString().substring(3, 5));
-        editor.putString("trYil", mBtnBas1.getText().toString().substring(6, mBtnBas1.getText().length()));
-        editor.apply();
-    }
-
-    public void veriGirisi() {
-        if (gelenID != 0) {
-            guncelle();
-        } else {
-            yeniVeriGirisi();
-        }
-    }
-
-    public void yeniVeriGirisi() {
-
-        if (mSpinnerTur1.getSelectedItemPosition() == 0) {
-            Toast.makeText(getApplicationContext(), "Yeni Kayıt Yapabilmek İçin" + "\n" + "\n" + "Bir Giriş Türü Seçmelisiniz!", Toast
-                    .LENGTH_SHORT)
-                    .show();
-        } else {
-            ContentValues contentValues = valuesYukleme();
-
-            Uri uri = getContentResolver().insert(Provider.CETVEL_CONTENT_URI, contentValues);
-            Toast.makeText(getApplicationContext(), "Yeni Kayıt Başarılı", Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    public void guncelle() {
-
-        if (mSpinnerTur1.getSelectedItemPosition() == 0) {
-            Toast.makeText(getApplicationContext(), "Güncelleme Yapabilmek İçin" + "\n" + "\n" + "Bir Giriş Türü Seçmelisiniz!", Toast.LENGTH_SHORT)
-                    .show();
-        } else {
-            Uri contentUri = Provider.CETVEL_CONTENT_URI;
-            String selection = Sabitler.TblCetvelClass.CETVEL_ID + " = " + (gelenID);
-
-            Cursor cursor = getContentResolver().query(contentUri, null, selection, null, null);
-
-            ContentValues contentValues = valuesYukleme();
-
-            try {
-                if (cursor != null) {
-                    if (cursor.moveToFirst()) {
-                        getContentResolver().update(contentUri, contentValues, selection, null);
-                        cursor.close();
-                    }
-
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                }
-            } catch (Exception ex) {
-                Toast.makeText(context, "Hata: " + ex, Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-
-    public void gelenVeri() {
-        //GELEN VERİ VARSA BURASI ÇALIŞIYOR
-        //GELEN VEWRİ YOKSA ONCREATE İŞLEMLERİ DEVAM EDİYOR.
-        //SADECE BOŞ VERİ GİRİŞ EKRANI AÇILIYOR.
+    public void gelenVeriVarsaYukle() {
         try {
-
+            //GELEN VERİ VARSA(GÜNCELLEME İÇİN) BURASI ÇALIŞIYOR
+            //YOKSA ONCREATE İŞLLEMLERİ DEVAM EDİYOR
             String veri = getIntent().getExtras().getString("veri");
             gelenID = Integer.parseInt(veri);
 
@@ -428,15 +353,209 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-
-    @Override
-    public void onClick(View view) {
-
-        if (view.getId() == R.id.btnTrBas1) {
-            setmBtnBas1();
+    public void veriGirisi() {
+        if (gelenID != 0) {
+            guncelle();
+        } else {
+            yeniVeriGirisi();
         }
-        if (view.getId() == R.id.btnTrBit1) {
-            setmBtnBit1();
+    }
+
+    public void yeniVeriGirisi() {
+
+        cursorCount2 = yeniVeriTarihiVarMı();
+
+        if (mSpinnerTur1.getSelectedItemPosition() == 0) {
+            Toast.makeText(getApplicationContext(), "Yeni Kayıt Yapabilmek İçin" + "\n" + "\n" + "Bir Giriş Türü Seçmelisiniz!", Toast
+                    .LENGTH_SHORT).show();
+        } else {
+            if (cursorCount2 == 0) {
+                yeniVeriTarihYoksaListeOlustur();
+                YeniVerileriGir();
+            } else {
+                YeniVerileriGir();
+            }
         }
+    }
+
+    private void YeniVerileriGir() {
+
+        ContentValues contentValues = valuesYukleme();
+
+        Uri uri = getContentResolver().insert(Provider.CETVEL_CONTENT_URI, contentValues);
+//        Toast.makeText(getApplicationContext(), "Yeni Kayıt Başarılı", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void guncelle() {
+
+        if (mSpinnerTur1.getSelectedItemPosition() == 0) {
+            Toast.makeText(getApplicationContext(), "Güncelleme Yapabilmek İçin" + "\n" + "\n" + "Bir Giriş Türü Seçmelisiniz!", Toast.LENGTH_SHORT)
+                    .show();
+        } else {
+            Uri contentUri = Provider.CETVEL_CONTENT_URI;
+            String selection = Sabitler.TblCetvelClass.CETVEL_ID + " = " + (gelenID);
+
+            Cursor cursor = getContentResolver().query(contentUri, null, selection, null, null);
+
+            ContentValues contentValues = valuesYukleme();
+
+            try {
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        getContentResolver().update(contentUri, contentValues, selection, null);
+                        cursor.close();
+                    }
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+            } catch (Exception ex) {
+                Toast.makeText(context, "Hata: " + ex, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    public ContentValues valuesYukleme() {
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(Sabitler.TblCetvelClass.CETVEL_TUR_1, mSpinnerTur1.getSelectedItem().toString());
+        contentValues.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, mTxtAciklama1.getText().toString());
+        contentValues.put(Sabitler.TblCetvelClass.CETVEL_GIDER_1, mTxtGider1.getText().toString());
+        contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, mBtnBas1.getText().toString());
+        contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BIT_1, mBtnBit1.getText().toString());
+
+        sharedPrefencesOlustur();
+
+        return contentValues;
+    }
+
+
+    public void sharedPrefencesOlustur() {
+
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("tur", mSpinnerTur1.getSelectedItem().toString());
+        editor.putString("trAy", mBtnBas1.getText().toString().substring(3, 5));
+        editor.putString("trYil", mBtnBas1.getText().toString().substring(6, mBtnBas1.getText().length()));
+        editor.apply();
+    }
+
+    public void yeniVeriTarihYoksaListeOlustur() {
+        String mBtnStr = mBtnBas1.getText().toString();
+        String mBtnGun = mBtnStr.substring(0, 2);
+        final String mBtnAy = mBtnStr.substring(3, 5);
+        final String mBtnYil = mBtnStr.substring(6, mBtnStr.length());
+        int mBtnAyGun = Integer.parseInt(mBtnGun);
+        int mBtnAyInt = Integer.parseInt(mBtnAy);
+        int mBtnYilInt = Integer.parseInt(mBtnYil);
+        final int aydakiGunSayısı;
+        final int ilkGunInt;
+        final int ilkCumartesi;
+
+
+        if (mBtnAyInt == 1 || mBtnAyInt == 3 || mBtnAyInt == 5 || mBtnAyInt == 7 || mBtnAyInt == 8 || mBtnAyInt == 10 || mBtnAyInt == 12) {
+            aydakiGunSayısı = 31;
+        } else if (mBtnAyInt == 4 || mBtnAyInt == 6 || mBtnAyInt == 9 || mBtnAyInt == 11) {
+            aydakiGunSayısı = 30;
+        } else if (mBtnAyInt == 2 && mBtnYilInt % 4 == 0) {
+            aydakiGunSayısı = 29;
+        } else {
+            aydakiGunSayısı = 28;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(mBtnYilInt, mBtnAyInt, mBtnAyGun);
+        ilkGunInt = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        int ilkCumartesiGerekliGun = 6 - ilkGunInt;
+        ilkCumartesi = 1 + ilkCumartesiGerekliGun;
+
+        String selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
+        String[] selectionArgs = {"%." + mBtnAy + "." + mBtnYil + "%"};
+        final Cursor cursor = getContentResolver().query(Provider.CETVEL_CONTENT_URI, null,
+                selection, selectionArgs, null);
+        final int cursorCount = cursor.getCount();
+
+        if (cursorCount == 0) {
+            ContentValues contentValues = new ContentValues();
+
+            String soni2;
+            for (int i2 = 1; i2 <= aydakiGunSayısı; i2++) {
+
+                if (String.valueOf(i2).length() < 2) {
+                    soni2 = String.valueOf(i2);
+                    soni2 = "0" + soni2;
+                } else {
+                    soni2 = String.valueOf(i2);
+                }
+
+                contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, soni2 + "." + mBtnAy + "" + "" +
+                        "." + mBtnYil);
+
+                Uri uri = getContentResolver().insert(Provider.CETVEL_CONTENT_URI, contentValues);
+            }
+
+
+            String soni3;
+            ContentValues contentValues2 = new ContentValues();
+
+            for (int i3 = ilkCumartesi; i3 <= aydakiGunSayısı; i3 += 7) {
+                if (String.valueOf(i3).length() < 2) {
+                    soni3 = String.valueOf(i3);
+                    soni3 = "0" + soni3;
+                } else {
+                    soni3 = String.valueOf(i3);
+                }
+
+                String select = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " = ?";
+                String[] args = {soni3 + "." + mBtnAy + "." + mBtnYil};
+
+                contentValues2.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, "Cumartesi");
+                getContentResolver().update(Provider.CETVEL_CONTENT_URI, contentValues2, select, args);
+            }
+
+            String soni4;
+            ContentValues contentValues3 = new ContentValues();
+
+            for (int i4 = ilkCumartesi + 1; i4 <= aydakiGunSayısı; i4 = i4 + 7) {
+                if (String.valueOf(i4).length() < 2) {
+                    soni4 = String.valueOf(i4);
+                    soni4 = "0" + soni4;
+                } else {
+                    soni4 = String.valueOf(i4);
+                }
+                String select = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " = ?";
+                String[] args = {soni4 + "." + mBtnAy + "." + mBtnYil};
+
+                contentValues3.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, "Pazar");
+                getContentResolver().update(Provider.CETVEL_CONTENT_URI, contentValues3, select, args);
+            }
+
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+
+            Toast.makeText(context, "Girilen Veri Tarihi Bulunmadığı İçin \n Girilen Ay Oluşturulmuştur." + aydakiGunSayısı,
+                    Toast.LENGTH_LONG).show();
+        }
+        cursor.close();
+    }
+
+
+    public int yeniVeriTarihiVarMı() {
+
+        String mBtnStr = mBtnBas1.getText().toString();
+        String mBtnGun = mBtnStr.substring(0, 2);
+        String mBtnAy = mBtnStr.substring(3, 5);
+        String mBtnYil = mBtnStr.substring(6, mBtnStr.length());
+
+        String selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
+        String[] selectionArgs = {"%." + mBtnAy + "." + mBtnYil + "%"};
+        final Cursor cursor = getContentResolver().query(Provider.CETVEL_CONTENT_URI, null, selection, selectionArgs, null);
+        cursorCount2 = cursor.getCount();
+
+        return cursorCount2;
     }
 }

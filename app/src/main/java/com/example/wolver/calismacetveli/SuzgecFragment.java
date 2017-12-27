@@ -226,7 +226,7 @@ public class SuzgecFragment extends android.support.v4.app.DialogFragment {
 
     public void sharedPrefencesOlustur() {
 
-        SharedPreferences preferences = getActivity().getPreferences(MODE_PRIVATE);
+        SharedPreferences preferences = getActivity().getSharedPreferences("share",MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
 
@@ -272,9 +272,7 @@ public class SuzgecFragment extends android.support.v4.app.DialogFragment {
             editor.putString("shrYil",spnYil);
         }
 
-        editor.apply();
-
-
+        editor.commit();
     }
 }
 

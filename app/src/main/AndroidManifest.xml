@@ -25,10 +25,6 @@
             android:name=".VeriGirisi"
             android:label="@string/title_activity_veri_girisi"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".Xsuzgec"
-            android:label="@string/title_activity_suzgec"
-            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
