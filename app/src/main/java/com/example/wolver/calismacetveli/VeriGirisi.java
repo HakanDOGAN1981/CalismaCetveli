@@ -41,6 +41,9 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
     int gelenID;
     int cursorCount2;
 
+    int gelenPosition;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,23 +68,25 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                 .simple_dropdown_item_1line);
         mSpinnerTur1.setAdapter(spinnerAdapter);
 
-        mSpinnerTur1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+        if (gelenPosition == 0) {
+            mSpinnerTur1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
 
-                if (mSpinnerTur1.getSelectedItemPosition() == 0) {
-                    mTxtAciklama1.setText("");
-                } else {
-                    txtDegisimi();
-                    mTxtAciklama1.requestFocus();
-                    mTxtAciklama1.selectAll();
+                    if (mSpinnerTur1.getSelectedItemPosition() == 0) {
+                        mTxtAciklama1.setText("");
+                    } else {
+                        txtDegisimi();
+                        mTxtAciklama1.requestFocus();
+                        mTxtAciklama1.selectAll();
+                    }
                 }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                }
+            });
+        }
 
         mTxtAciklama1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -275,7 +280,6 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
             Cursor cursor = getContentResolver().query(contentUri, null, selection, null,
                     null);
 
-            int gelenPosition = 0;
 
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
@@ -326,20 +330,19 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                     }
                     cursor.close();
 
-                    final int finalGelenPosition = gelenPosition;
                     mSpinnerTur1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
 
-                            if (finalGelenPosition != position) {
-
-                                if (mSpinnerTur1.getSelectedItemPosition() == 0) {
-                                    mTxtAciklama1.setText("");
-                                } else {
-                                    txtDegisimi();
-                                    mTxtAciklama1.requestFocus();
-                                    mTxtAciklama1.selectAll();
-                                }
+                            if (mSpinnerTur1.getSelectedItemPosition() == 0) {
+                                mSpinnerTur1.setSelection(gelenPosition);
+                            } else if (mSpinnerTur1.getSelectedItemPosition() == gelenPosition) {
+                            } else if (mSpinnerTur1.getSelectedItemPosition() == 0) {
+                                mTxtAciklama1.setText("");
+                            } else {
+                                txtDegisimi();
+                                mTxtAciklama1.requestFocus();
+                                mTxtAciklama1.selectAll();
                             }
                         }
 
