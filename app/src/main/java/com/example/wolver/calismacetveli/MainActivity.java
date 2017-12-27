@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,8 +20,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button mCetvel;
     Button mYeniVeri;
     TextView mtxtAy;
+    ImageButton mImgIleri, mImgGeri;
 
     RecyclerView mRecyclerView;
 
@@ -56,9 +58,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<Liste> tumCetvelListe = new ArrayList<>();
     ArrayList<Liste> suzTumCetvelListe = new ArrayList<>();
     ArrayList<Liste> tarihTumCetvelListe = new ArrayList<>();
-
-    SQLiteDatabase db;
-    String alinan, gelenTur, gelenYil, gelenAy;
 
     Calendar calendar;
 
@@ -76,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String shrTrAy;
     String shrTrYil;
 
+    int mTxtAyInt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView = (RecyclerView) findViewById(R.id.Recyclerview);
 
         /////////////////SÜZME OLUP OLMADIĞINI KONTROL EDİYOR. ONAGÖRE YA SÜZYOR YADA NE VARSA GETİRİYOR
-
         if (shrGelenInt == 4) {
             dataguncelle();
         } else {
@@ -105,16 +105,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setAdapter(mRecAdapter);
 
         /////////////////////SWIPE İŞLEMLERİ
-
         RecTouchCallBack mRecTouchCallBack = new RecTouchCallBack(mRecAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(mRecTouchCallBack);
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
-
         /////////////////////SWIPE İŞLEMLERİ
 
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         // RECYCLERVIEW TANITIMI
-
 
         // RECYCLERVIEW ONCLICK
         mRecyclerView.addOnItemTouchListener(new RecListener(this, mRecyclerView, new RecListener.OnItemClickListener() {
@@ -140,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }));
         // RECYCLERVIEW ONCLICK
+
     }
 
     private void tarihKontorolu() {
@@ -204,6 +202,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mYeniVeri = (Button) findViewById(R.id.btnVeriGiris);
         mImg = (ImageView) findViewById(R.id.imageView);
         mtxtAy = (TextView) findViewById(R.id.txtAy);
+        mImgIleri = (ImageButton) findViewById(R.id.ayIleri);
+        mImgIleri = (ImageButton) findViewById(R.id.ayGeri);
     }
 
 
@@ -255,46 +255,99 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (view.getId() == R.id.btnSuz) {
-            suzgec();
+            suzgecFragmentAc();
         }
-    }
 
-
-    // MENÜ İŞLEMLERİ
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-
-            case R.id.ekle:
-                yeniVeriEkranı();
-                break;
-
-            case R.id.suz:
-                suzgec();
-                break;
+        if (view.getId() == R.id.ayIleri) {
+            mTxtAyInt = Integer.parseInt(mtxtAy.getText().toString());
+            mTxtAyInt = (mTxtAyInt + 1) % 12;
+            if (mTxtAyInt == 0) {
+                mTxtAyInt = 12;
+            }
+            mtxtAy.setText("" + mTxtAyInt);
+            ileri_Geri_Ay();
         }
-        return super.onOptionsItemSelected(item);
+
+        if (view.getId() == R.id.ayGeri) {
+            mTxtAyInt = Integer.parseInt(mtxtAy.getText().toString());
+            mTxtAyInt = (mTxtAyInt - 1) % 12;
+            if (mTxtAyInt == 0) {
+                mTxtAyInt = 12;
+            }
+            mtxtAy.setText("" + mTxtAyInt);
+            ileri_Geri_Ay();
+        }
+
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(true);
+    private void ileri_Geri_Ay() {
+
+        sharedPrefencesAl_VeriSuz();
+
+            String selection;
+            String[] selectionArgs;
+            String[] projection = {Sabitler.TblCetvelClass.CETVEL_ID, Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, Sabitler
+                    .TblCetvelClass.CETVEL_TARIH_BAS_1};
+
+            selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
+            selectionArgs = new String[]{"%." + mTxtAyInt + "." + shrTrYil + "%"};
+
+            Cursor cursor = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, selectionArgs, null);
+
+            if (cursor != null) {
+                suzTumCetvelListe.clear();
+
+                while (cursor.moveToNext()) {
+                    Liste geciciListe = new Liste();
+                    geciciListe.setId(cursor.getInt(cursor.getColumnIndex(Sabitler.TblCetvelClass.CETVEL_ID)));
+                    geciciListe.setAciklama(cursor.getString(cursor.getColumnIndex(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1)));
+                    geciciListe.setTarih(cursor.getString(cursor.getColumnIndex(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1)));
+                    suzTumCetvelListe.add(geciciListe);
+                }
+                cursor.close();
+            }
+
+            mRecAdapter = new RecAdapter(this, suzTumCetvelListe);
+            mRecyclerView.setAdapter(mRecAdapter);
+            mRecAdapter.notifyDataSetChanged();
+        }
+
+
+        // MENÜ İŞLEMLERİ
+        @Override
+        public boolean onCreateOptionsMenu (Menu menu){
+            getMenuInflater().inflate(R.menu.menu_main, menu);
             return true;
         }
-        return super.onKeyDown(keyCode, event);
-    }//SANAL GERİ TUŞU İLE ÇIKIŞ
-    // MENÜ İŞLEMLERİ
 
-    private void suzgec() {
+        @Override
+        public boolean onOptionsItemSelected (MenuItem item){
+            int id = item.getItemId();
+
+            switch (id) {
+
+                case R.id.ekle:
+                    yeniVeriEkranı();
+                    break;
+
+                case R.id.suz:
+                    suzgecFragmentAc();
+                    break;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+        @Override
+        public boolean onKeyDown ( int keyCode, KeyEvent event){
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                moveTaskToBack(true);
+                return true;
+            }
+            return super.onKeyDown(keyCode, event);
+        }//SANAL GERİ TUŞU İLE ÇIKIŞ
+        // MENÜ İŞLEMLERİ
+
+    private void suzgecFragmentAc() {
 
         SuzgecFragment fragment = new SuzgecFragment();
         fragment.show(getSupportFragmentManager(), "Yeni");
