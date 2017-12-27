@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,15 +26,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wolver.calismacetveli.adapter.Liste;
+import com.example.wolver.calismacetveli.adapter.RecAdapter;
 import com.example.wolver.calismacetveli.data.Provider;
 import com.example.wolver.calismacetveli.data.Sabitler;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class VeriGirisi extends AppCompatActivity implements View.OnClickListener {
 
     public static AutoCompleteTextView mTxtAciklama1, mTxtGider1;
     public static Spinner mSpinnerTur1;
+
 
     Button mBtnBas1, mBtnBit1;
     Context context = this;
@@ -42,6 +47,10 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
     int cursorCount2;
 
     int gelenPosition;
+
+    ArrayList<Liste> suzTumCetvelListe = new ArrayList<>();
+    RecAdapter mRecAdapter;
+    RecyclerView mRecyclerView;
 
 
     @Override
@@ -147,6 +156,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
         mBtnBit1 = (Button) findViewById(R.id.btnTrBit1);
 
         mtxt = (TextView) findViewById(R.id.mtxt);
+        mRecyclerView = (RecyclerView) findViewById(R.id.Recyclerview);
     }
 
     // MENÜ İŞLEMLERİ
@@ -374,14 +384,17 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
         } else {
             if (cursorCount2 == 0) {
                 yeniVeriTarihYoksaListeOlustur();
-                YeniVerileriGir();
+                yeniVerileriGir();
+                sharedPrefencesOlustur();
+
             } else {
-                YeniVerileriGir();
+                yeniVerileriGir();
             }
         }
     }
 
-    private void YeniVerileriGir() {
+
+    private void yeniVerileriGir() {
 
         ContentValues contentValues = valuesYukleme();
 
@@ -439,12 +452,14 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
     public void sharedPrefencesOlustur() {
 
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("share", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("tur", mSpinnerTur1.getSelectedItem().toString());
-        editor.putString("trAy", mBtnBas1.getText().toString().substring(3, 5));
-        editor.putString("trYil", mBtnBas1.getText().toString().substring(6, mBtnBas1.getText().length()));
-        editor.apply();
+
+        editor.putInt("secilen", 1);
+        editor.putString("shrAy", mBtnBas1.getText().toString().substring(3, 5));
+        editor.putString("shrYil", mBtnBas1.getText().toString().substring(6, mBtnBas1.getText().length()));
+
+        editor.commit();
     }
 
     public void yeniVeriTarihYoksaListeOlustur() {

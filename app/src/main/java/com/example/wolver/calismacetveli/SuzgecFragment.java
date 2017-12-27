@@ -226,7 +226,7 @@ public class SuzgecFragment extends android.support.v4.app.DialogFragment {
 
     public void sharedPrefencesOlustur() {
 
-        SharedPreferences preferences = getActivity().getSharedPreferences("share",MODE_PRIVATE);
+        SharedPreferences preferences = getActivity().getSharedPreferences("share", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
 
@@ -235,41 +235,40 @@ public class SuzgecFragment extends android.support.v4.app.DialogFragment {
         String spnYil = mSpinnerYil.getSelectedItem().toString();
 
 
-
         //1. ihtimal Tür boş , ay ve yıla dolu
         if (spnTur.equalsIgnoreCase("Giriş Türünü Seçiniz") && !spnAy.equalsIgnoreCase("Seçiniz")
                 && !spnYil.equalsIgnoreCase("Seçiniz")) {
             editor.putInt("secilen", 1);
-            editor.putString("shrTur",spnTur);
-            editor.putString("shrAy",spnAy);
-            editor.putString("shrYil",spnYil);
+            editor.putString("shrTur", spnTur);
+            editor.putString("shrAy", spnAy);
+            editor.putString("shrYil", spnYil);
         }
 
         //2. ihtimal Tür dolu, ay ve yıl boş
         if (!spnTur.equalsIgnoreCase("Giriş Türünü Seçiniz") && spnAy.equalsIgnoreCase("Seçiniz")
                 && spnYil.equalsIgnoreCase("Seçiniz")) {
             editor.putInt("secilen", 2);
-            editor.putString("shrTur",spnTur);
-            editor.putString("shrAy",spnAy);
-            editor.putString("shrYil",spnYil);
+            editor.putString("shrTur", spnTur);
+            editor.putString("shrAy", spnAy);
+            editor.putString("shrYil", spnYil);
         }
 
         //3. ihtimal üçüde dolu
         if (!spnTur.equalsIgnoreCase("Giriş Türünü Seçiniz") && !spnAy.equalsIgnoreCase("Seçiniz")
                 && !spnYil.equalsIgnoreCase("Seçiniz")) {
             editor.putInt("secilen", 3);
-            editor.putString("shrTur",spnTur);
-            editor.putString("shrAy",spnAy);
-            editor.putString("shrYil",spnYil);
+            editor.putString("shrTur", spnTur);
+            editor.putString("shrAy", spnAy);
+            editor.putString("shrYil", spnYil);
         }
 
         //4. ihtimal üçüde boş
         if (spnTur.equalsIgnoreCase("Giriş Türünü Seçiniz") && spnAy.equalsIgnoreCase("Seçiniz")
                 && spnYil.equalsIgnoreCase("Seçiniz")) {
             editor.putInt("secilen", 4);
-            editor.putString("shrTur",spnTur);
-            editor.putString("shrAy",spnAy);
-            editor.putString("shrYil",spnYil);
+            editor.putString("shrTur", spnTur);
+            editor.putString("shrAy", spnAy);
+            editor.putString("shrYil", spnYil);
         }
 
         editor.commit();

@@ -22,7 +22,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -84,10 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         eklenenViewTanitimi();
         glideİslemleri();
 
-        gelenVeriKontrolu();
         tarihKontorolu();
 
-        sharedPrefencesAl();
+        sharedPrefencesAl_VeriSuz();
 
         // RECYCLERVIEW TANITIMI
         mRecyclerView = (RecyclerView) findViewById(R.id.Recyclerview);
@@ -294,30 +292,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void gelenVeriKontrolu() {
+    public void suzDataguncelle() {
 
-        try {
-            gelenTur = getIntent().getExtras().getString("tur");
-            gelenAy = getIntent().getExtras().getString("ay");
-            gelenYil = getIntent().getExtras().getString("yil");
-
-            if (gelenTur.equalsIgnoreCase("Giriş Türünü Seçiniz")) {
-                gelenTur = "";
-            }
-            if (gelenAy.equalsIgnoreCase("Seçiniz")) {
-                gelenAy = "";
-            }
-            if (gelenYil.equalsIgnoreCase("Seçiniz")) {
-                gelenYil = "";
-            }
-
-            alinan = gelenTur + gelenAy + gelenYil;
-
-        } catch (Exception e) {
-            alinan = "";
-        }
+        suzTumCetvelListe = suzTumCetvelListe();//METOD AŞAĞIDA tumCetvelListe()
+        mRecAdapter = new RecAdapter(this, suzTumCetvelListe);
+        mRecyclerView.setAdapter(mRecAdapter);
     }
-
 
     public ArrayList<Liste> suzTumCetvelListe() {
         String selection = null;
@@ -366,12 +346,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void suzDataguncelle() {
-
-        suzTumCetvelListe = suzTumCetvelListe();//METOD AŞAĞIDA tumCetvelListe()
-        mRecAdapter = new RecAdapter(this, suzTumCetvelListe);
-        mRecyclerView.setAdapter(mRecAdapter);
-    }
 
     public void tariheGoreVeriOlustur() {
         String selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
@@ -460,7 +434,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cursor.close();
     }
 
-    public void sharedPrefencesAl() {
+    public void sharedPrefencesAl_VeriSuz() {
 
         SharedPreferences preferences = context.getSharedPreferences("share", MODE_PRIVATE);
         shrGelenInt = preferences.getInt("secilen", 4);
