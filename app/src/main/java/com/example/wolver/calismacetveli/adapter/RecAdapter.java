@@ -65,7 +65,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
         }
 
         if (holder.mTextİcerik.getText().equals("Cumartesi") || holder.mTextİcerik.getText().equals("Pazar")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#bdbdbd"));//colorSecondary2TransparanTacha
+            holder.itemView.setBackgroundColor(Color.parseColor("#FF263238"));//colorSecondary2TransparanTacha
             holder.mTextİcerik.setTextColor(Color.parseColor("#030404"));//colorPrimaryDarkgreen
             holder.mTextTarih.setTextColor(Color.parseColor("#030404"));//colorPrimaryDarkgreen
         }

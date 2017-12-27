@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //    NEW ARRAYLIST<>(); ŞEKLİNDE OLACAK
     ArrayList<Liste> tumCetvelListe = new ArrayList<>();
     ArrayList<Liste> suzTumCetvelListe = new ArrayList<>();
-    ArrayList<Liste> tarihTumCetvelListe = new ArrayList<>();
 
     Calendar calendar;
 
@@ -203,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mImg = (ImageView) findViewById(R.id.imageView);
         mtxtAy = (TextView) findViewById(R.id.txtAy);
         mImgIleri = (ImageButton) findViewById(R.id.ayIleri);
-        mImgIleri = (ImageButton) findViewById(R.id.ayGeri);
+        mImgGeri = (ImageButton) findViewById(R.id.ayGeri);
     }
 
 
@@ -503,6 +502,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         shrGelenTur = preferences.getString("shrTur", "Sonuç Yok");
         shrTrAy = preferences.getString("shrAy", "Sonuç Yok");
         shrTrYil = preferences.getString("shrYil", "Sonuç Yok");
+//
+//        if (shrTrAy.equalsIgnoreCase("Seçiniz")){
+//
+//        }else {
+//
+//            if(shrTrAy.startsWith("0")){
+//                mtxtAy.setText(shrTrAy.substring(1,2));
+//            }else {
+//                mtxtAy.setText(shrTrAy);
+//            }
+//
+//        }
+
     }
 }
 

@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -27,10 +28,6 @@ public class SuzgecFragment extends android.support.v4.app.DialogFragment {
     private ImageButton mImgKapat;
     private Button mBtnSuz;
     private CheckBox mcheckBox;
-    public static String shrTur;
-    public static String shrAy;
-    public static String shrYil;
-
 
     int ay, yil;
 
@@ -66,8 +63,6 @@ public class SuzgecFragment extends android.support.v4.app.DialogFragment {
                     guncelAySetSelection();
                     guncelYilSetSelection();
                 } else {
-                    mSpinnerAy.setSelection(0);
-                    mSpinnerYil.setSelection(0);
                 }
             }
         });
@@ -139,9 +134,6 @@ public class SuzgecFragment extends android.support.v4.app.DialogFragment {
 
     public void suz() {
         Intent Main = new Intent(getContext(), MainActivity.class);
-        Main.putExtra("tur", mSpinnerTur.getSelectedItem().toString());
-        Main.putExtra("ay", mSpinnerAy.getSelectedItem().toString());
-        Main.putExtra("yil", mSpinnerYil.getSelectedItem().toString());
         sharedPrefencesOlustur();
         startActivity(Main);
     }
@@ -233,7 +225,6 @@ public class SuzgecFragment extends android.support.v4.app.DialogFragment {
         String spnTur = mSpinnerTur.getSelectedItem().toString();
         String spnAy = mSpinnerAy.getSelectedItem().toString();
         String spnYil = mSpinnerYil.getSelectedItem().toString();
-
 
         //1. ihtimal Tür boş , ay ve yıla dolu
         if (spnTur.equalsIgnoreCase("Giriş Türünü Seçiniz") && !spnAy.equalsIgnoreCase("Seçiniz")
