@@ -1,5 +1,6 @@
 package com.example.wolver.calismacetveli;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -25,8 +26,10 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.wolver.calismacetveli.data.Provider;
 import com.example.wolver.calismacetveli.data.Sabitler;
+
 import java.util.Calendar;
 
 public class VeriGirisi extends AppCompatActivity implements View.OnClickListener {
@@ -198,22 +201,52 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
     public void setmBtnBas1() {
 
+        String mBtnStr = mBtnBas1.getText().toString();
+        String mBtnGun = mBtnStr.substring(0, 2);
+        String mBtnAy = mBtnStr.substring(3, 5);
+        String mBtnYil = mBtnStr.substring(6, mBtnStr.length());
+
+
         Calendar simdikizaman = Calendar.getInstance();
         int yil = simdikizaman.get(Calendar.YEAR);
         int ay = simdikizaman.get(Calendar.MONTH);
         int gun = simdikizaman.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog
+        Integer sonGun = 0;
+        Integer sonAy = 0;
+        Integer sonYil = 0;
+
+        try {
+            sonGun = Integer.parseInt(mBtnGun);
+            sonAy = Integer.parseInt(mBtnAy);
+            sonYil = Integer.parseInt(mBtnYil);
+        } catch (Exception ex) {
+        }
+
+
+        if (sonGun == 0) {
+            sonGun = gun;
+            sonAy = ay;
+            sonYil = yil;
+        } else {
+            sonGun = Integer.parseInt(mBtnGun);
+            sonAy = Integer.parseInt(mBtnAy)-1;
+            sonYil = Integer.parseInt(mBtnYil);
+        }
+
+
+        DatePickerDialog  datePickerDialog = new DatePickerDialog(context, AlertDialog.THEME_DEVICE_DEFAULT_DARK, new DatePickerDialog
                 .OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
 
                 String sonAyStr = null;
                 String sonDayStr = null;
+
                 int sonAy = month + 1;
-                    if (String.valueOf(sonAy).length() < 2) {
-                        sonAyStr = String.valueOf(sonAy);
-                        sonAyStr = "0" + sonAyStr;
+                if (String.valueOf(sonAy).length() < 2) {
+                    sonAyStr = String.valueOf(sonAy);
+                    sonAyStr = "0" + sonAyStr;
                 } else {
                     sonAyStr = String.valueOf(sonAy);
                 }
@@ -229,26 +262,54 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                 mBtnBas1.setText(sonDayStr + "." + sonAyStr + "." + year);
                 mBtnBit1.setText(sonDayStr + "." + sonAyStr + "." + year);
             }
-        }, yil, ay, gun);
+        }, sonYil, sonAy, sonGun);
         datePickerDialog.show();
     }
 
     public void setmBtnBit1() {
+
+        String mBtnStr = mBtnBit1.getText().toString();
+        String mBtnGun = mBtnStr.substring(0, 2);
+        String mBtnAy = mBtnStr.substring(3, 5);
+        String mBtnYil = mBtnStr.substring(6, mBtnStr.length());
 
         Calendar simdikizaman = Calendar.getInstance();
         int yil = simdikizaman.get(Calendar.YEAR);
         int ay = simdikizaman.get(Calendar.MONTH);
         int gun = simdikizaman.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+        Integer sonGun = 0;
+        Integer sonAy = 0;
+        Integer sonYil = 0;
+
+        try {
+            sonGun = Integer.parseInt(mBtnGun);
+            sonAy = Integer.parseInt(mBtnAy);
+            sonYil = Integer.parseInt(mBtnYil);
+        } catch (Exception ex) {
+        }
+
+
+        if (sonGun == 0) {
+            sonGun = gun;
+            sonAy = ay;
+            sonYil = yil;
+        } else {
+            sonGun = Integer.parseInt(mBtnGun);
+            sonAy = Integer.parseInt(mBtnAy)-1;
+            sonYil = Integer.parseInt(mBtnYil);
+        }
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context, AlertDialog.THEME_DEVICE_DEFAULT_DARK, new
+                DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 String sonAyStr = null;
                 String sonDayStr = null;
                 int sonAy = month + 1;
-                    if (String.valueOf(sonAy).length() < 2) {
-                        sonAyStr = String.valueOf(sonAy);
-                        sonAyStr = "0" + sonAyStr;
+                if (String.valueOf(sonAy).length() < 2) {
+                    sonAyStr = String.valueOf(sonAy);
+                    sonAyStr = "0" + sonAyStr;
                 } else {
                     sonAyStr = String.valueOf(sonAy);
                 }
@@ -261,7 +322,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                 }
                 mBtnBit1.setText(sonDayStr + "." + sonAyStr + "." + year);
             }
-        }, yil, ay, gun);
+        }, sonYil, sonAy, sonGun);
         datePickerDialog.show();
     }
 
