@@ -27,8 +27,8 @@
             android:id="@+id/mtxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
             android:text="Tür"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarx" />
@@ -37,7 +37,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="39dp"
             android:text="Açıklama"
             app:layout_constraintStart_toStartOf="@+id/mtxt"
             app:layout_constraintTop_toBottomOf="@+id/mtxt" />

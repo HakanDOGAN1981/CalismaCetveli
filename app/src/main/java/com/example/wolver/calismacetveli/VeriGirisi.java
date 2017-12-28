@@ -25,13 +25,8 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.wolver.calismacetveli.adapter.Liste;
-import com.example.wolver.calismacetveli.adapter.RecAdapter;
 import com.example.wolver.calismacetveli.data.Provider;
 import com.example.wolver.calismacetveli.data.Sabitler;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class VeriGirisi extends AppCompatActivity implements View.OnClickListener {
@@ -48,9 +43,10 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
     int gelenPosition;
 
-    ArrayList<Liste> suzTumCetvelListe = new ArrayList<>();
-    RecAdapter mRecAdapter;
     RecyclerView mRecyclerView;
+
+    String[] simdiStrDizi = new String[3];
+    Integer[] ayinGunleriDizi = new Integer[2];
 
 
     @Override
@@ -215,12 +211,9 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                 String sonAyStr = null;
                 String sonDayStr = null;
                 int sonAy = month + 1;
-                if (String.valueOf(month).length() < 2) {
-                    sonAy = month + 1;
                     if (String.valueOf(sonAy).length() < 2) {
                         sonAyStr = String.valueOf(sonAy);
                         sonAyStr = "0" + sonAyStr;
-                    }
                 } else {
                     sonAyStr = String.valueOf(sonAy);
                 }
@@ -253,16 +246,12 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                 String sonAyStr = null;
                 String sonDayStr = null;
                 int sonAy = month + 1;
-                if (String.valueOf(month).length() < 2) {
-                    sonAy = month + 1;
                     if (String.valueOf(sonAy).length() < 2) {
                         sonAyStr = String.valueOf(sonAy);
                         sonAyStr = "0" + sonAyStr;
-                    }
                 } else {
                     sonAyStr = String.valueOf(sonAy);
                 }
-
 
                 if (String.valueOf(day).length() < 2) {
                     sonDayStr = String.valueOf(day);
@@ -399,7 +388,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
         ContentValues contentValues = valuesYukleme();
 
         Uri uri = getContentResolver().insert(Provider.CETVEL_CONTENT_URI, contentValues);
-//        Toast.makeText(getApplicationContext(), "Yeni Kayıt Başarılı", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Yeni Kayıt Başarılı", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
@@ -463,33 +452,13 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
     }
 
     public void yeniVeriTarihYoksaListeOlustur() {
+        simdiStrDizi = Tarihler.simdiOlustur();
+        ayinGunleriDizi = Tarihler.ayinGunleri();
+
         String mBtnStr = mBtnBas1.getText().toString();
         String mBtnGun = mBtnStr.substring(0, 2);
         final String mBtnAy = mBtnStr.substring(3, 5);
         final String mBtnYil = mBtnStr.substring(6, mBtnStr.length());
-        int mBtnAyGun = Integer.parseInt(mBtnGun);
-        int mBtnAyInt = Integer.parseInt(mBtnAy);
-        int mBtnYilInt = Integer.parseInt(mBtnYil);
-        final int aydakiGunSayısı;
-        final int ilkGunInt;
-        final int ilkCumartesi;
-
-
-        if (mBtnAyInt == 1 || mBtnAyInt == 3 || mBtnAyInt == 5 || mBtnAyInt == 7 || mBtnAyInt == 8 || mBtnAyInt == 10 || mBtnAyInt == 12) {
-            aydakiGunSayısı = 31;
-        } else if (mBtnAyInt == 4 || mBtnAyInt == 6 || mBtnAyInt == 9 || mBtnAyInt == 11) {
-            aydakiGunSayısı = 30;
-        } else if (mBtnAyInt == 2 && mBtnYilInt % 4 == 0) {
-            aydakiGunSayısı = 29;
-        } else {
-            aydakiGunSayısı = 28;
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(mBtnYilInt, mBtnAyInt, mBtnAyGun);
-        ilkGunInt = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-        int ilkCumartesiGerekliGun = 6 - ilkGunInt;
-        ilkCumartesi = 1 + ilkCumartesiGerekliGun;
 
         String selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
         String[] selectionArgs = {"%." + mBtnAy + "." + mBtnYil + "%"};
@@ -501,7 +470,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
             ContentValues contentValues = new ContentValues();
 
             String soni2;
-            for (int i2 = 1; i2 <= aydakiGunSayısı; i2++) {
+            for (int i2 = 1; i2 <= ayinGunleriDizi[0]; i2++) {
 
                 if (String.valueOf(i2).length() < 2) {
                     soni2 = String.valueOf(i2);
@@ -520,7 +489,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
             String soni3;
             ContentValues contentValues2 = new ContentValues();
 
-            for (int i3 = ilkCumartesi; i3 <= aydakiGunSayısı; i3 += 7) {
+            for (int i3 = ayinGunleriDizi[1]; i3 <= ayinGunleriDizi[0]; i3 += 7) {
                 if (String.valueOf(i3).length() < 2) {
                     soni3 = String.valueOf(i3);
                     soni3 = "0" + soni3;
@@ -535,10 +504,11 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                 getContentResolver().update(Provider.CETVEL_CONTENT_URI, contentValues2, select, args);
             }
 
+
             String soni4;
             ContentValues contentValues3 = new ContentValues();
 
-            for (int i4 = ilkCumartesi + 1; i4 <= aydakiGunSayısı; i4 = i4 + 7) {
+            for (int i4 = ayinGunleriDizi[1] + 1; i4 <= ayinGunleriDizi[0]; i4 = i4 + 7) {
                 if (String.valueOf(i4).length() < 2) {
                     soni4 = String.valueOf(i4);
                     soni4 = "0" + soni4;
@@ -555,7 +525,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
 
-            Toast.makeText(context, "Girilen Veri Tarihi Bulunmadığı İçin \n Girilen Ay Oluşturulmuştur." + aydakiGunSayısı,
+            Toast.makeText(context, "Girilen Veri Tarihi Bulunmadığı İçin \n Girilen Ay Oluşturulmuştur." + ayinGunleriDizi[0],
                     Toast.LENGTH_LONG).show();
         }
         cursor.close();
@@ -563,7 +533,6 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
 
     public int yeniVeriTarihiVarMı() {
-
         String mBtnStr = mBtnBas1.getText().toString();
         String mBtnGun = mBtnStr.substring(0, 2);
         String mBtnAy = mBtnStr.substring(3, 5);

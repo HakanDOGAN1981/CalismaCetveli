@@ -35,8 +35,6 @@ import com.example.wolver.calismacetveli.data.Provider;
 import com.example.wolver.calismacetveli.data.Sabitler;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -58,23 +56,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<Liste> tumCetvelListe = new ArrayList<>();
     ArrayList<Liste> suzTumCetvelListe = new ArrayList<>();
 
-    Calendar calendar;
-
-    String sonAyStr;
-    String sonYilStr;
-    String ilkGunStr;
-
-    int aydakiGunSayısı;
-    int simdiAy;
-    int ilkGunInt;
-    int ilkCumartesi;
-
     int shrGelenInt;
     String shrGelenTur;
     String shrTrAy;
     String shrTrYil;
 
     int mTxtAyInt;
+
+    String[] simdiStrDizi = new String[3];
+    Integer[] ayinGunleriDizi = new Integer[2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         eklenenViewTanitimi();
         glideİslemleri();
 
-        tarihKontorolu();
+        guncel_Tarih_Yoksa_VeriOlustur();//İLK AÇILDIĞINDA GÜNÜMÜZ TARİHİ YOKSA VERİ OLUŞTURUR.
 
         sharedPrefencesAl_VeriSuz();
 
@@ -93,9 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         /////////////////SÜZME OLUP OLMADIĞINI KONTROL EDİYOR. ONAGÖRE YA SÜZYOR YADA NE VARSA GETİRİYOR
         if (shrGelenInt == 4) {
-            dataguncelle();
+            tumVerileriListele();
         } else {
-            suzDataguncelle();
+            suzupVerileriListele();
         }
         /////////////////SÜZME OLUP OLMADIĞINI KONTROL EDİYOR. ONAGÖRE YA SÜZYOR YADA NE VARSA GETİRİYOR
 
@@ -139,51 +129,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void tarihKontorolu() {
-
-        Calendar simdi = Calendar.getInstance();
-        int month = simdi.get(Calendar.MONTH);
-        simdiAy = month + 1;
-        int simdiYil = simdi.get(Calendar.YEAR);
-        sonYilStr = String.valueOf(simdiYil);
-
-        //AYIN İLK GÜNÜNÜ BULMAK(STRING)
-        calendar = Calendar.getInstance();
-        calendar.set(Calendar.DATE, 1);
-        ilkGunStr = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
-        //AYIN İLK GÜNÜNÜ BULMAK(STRING)
-
-        //AYIN İLK GÜNÜNÜ BULMAK(INT)-HAFTALIK DEĞER
-        ilkGunInt = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-        int ilkCumartesiGerekliGun = 6 - ilkGunInt;
-        ilkCumartesi = 1 + ilkCumartesiGerekliGun;
-        //AYIN İLK GÜNÜNÜ BULMAK(INT)
-
-        mtxtAy.setText("" + simdiAy);
-
-        if (String.valueOf(month).length() < 2) {
-            if (String.valueOf(simdiAy).length() < 2) {
-                sonAyStr = String.valueOf(simdiAy);
-                sonAyStr = "0" + sonAyStr;
-            }
-        } else {
-            sonAyStr = String.valueOf(simdiAy);
-        }
-
-        if (simdiAy == 1 || simdiAy == 3 || simdiAy == 5 || simdiAy == 7 || simdiAy == 8 || simdiAy == 10 || simdiAy == 12) {
-            aydakiGunSayısı = 31;
-        } else if (simdiAy == 4 || simdiAy == 6 || simdiAy == 9 || simdiAy == 11) {
-            aydakiGunSayısı = 30;
-        } else if (simdiAy == 2 && simdiYil % 4 == 0) {
-            aydakiGunSayısı = 29;
-        } else {
-            aydakiGunSayısı = 28;
-        }
-
-        tariheGoreVeriOlustur();
-    }
-
-
     private void yeniVeriEkranı() {
         Intent yeniveri = new Intent(getApplicationContext(), VeriGirisi.class);
         startActivity(yeniveri);
@@ -206,14 +151,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void dataguncelle() {
-
-        tumCetvelListe = tumCetvelListe();//METOD AŞAĞIDA tumCetvelListe()
-        mRecAdapter = new RecAdapter(this, tumCetvelListe);
-        mRecyclerView.setAdapter(mRecAdapter);
-    }
-
-
     private void glideİslemleri() {
 
         Glide.with(this)
@@ -222,6 +159,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .into(mImg);
     }
 
+
+    public void tumVerileriListele() {
+
+        tumCetvelListe = tumCetvelListe();//METOD AŞAĞIDA tumCetvelListe()
+        mRecAdapter = new RecAdapter(this, tumCetvelListe);
+        mRecyclerView.setAdapter(mRecAdapter);
+    }
 
     public ArrayList<Liste> tumCetvelListe() {
 
@@ -263,7 +207,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (mTxtAyInt == 0) {
                 mTxtAyInt = 12;
             }
-            mtxtAy.setText("" + mTxtAyInt);
+            if (String.valueOf(mTxtAyInt).toString().length() < 2) {
+                mtxtAy.setText("0" + mTxtAyInt);
+            } else {
+                mtxtAy.setText("" + mTxtAyInt);
+            }
             ileri_Geri_Ay();
         }
 
@@ -273,7 +221,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (mTxtAyInt == 0) {
                 mTxtAyInt = 12;
             }
-            mtxtAy.setText("" + mTxtAyInt);
+
+            if (String.valueOf(mTxtAyInt).toString().length() < 2) {
+                mtxtAy.setText("0" + mTxtAyInt);
+            } else {
+                mtxtAy.setText("" + mTxtAyInt);
+            }
+
             ileri_Geri_Ay();
         }
 
@@ -283,68 +237,76 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         sharedPrefencesAl_VeriSuz();
 
-            String selection;
-            String[] selectionArgs;
-            String[] projection = {Sabitler.TblCetvelClass.CETVEL_ID, Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, Sabitler
-                    .TblCetvelClass.CETVEL_TARIH_BAS_1};
+        String selection;
+        String[] selectionArgs;
+        String[] projection = {Sabitler.TblCetvelClass.CETVEL_ID, Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, Sabitler
+                .TblCetvelClass.CETVEL_TARIH_BAS_1};
 
-            selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
-            selectionArgs = new String[]{"%." + mTxtAyInt + "." + shrTrYil + "%"};
+        selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
+        selectionArgs = new String[]{"%." + mtxtAy.getText().toString() + "." + shrTrYil + "%"};
 
-            Cursor cursor = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, selectionArgs, null);
+        Cursor cursor = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, selectionArgs, null);
 
-            if (cursor != null) {
-                suzTumCetvelListe.clear();
+        if (cursor != null) {
+            suzTumCetvelListe.clear();
 
-                while (cursor.moveToNext()) {
-                    Liste geciciListe = new Liste();
-                    geciciListe.setId(cursor.getInt(cursor.getColumnIndex(Sabitler.TblCetvelClass.CETVEL_ID)));
-                    geciciListe.setAciklama(cursor.getString(cursor.getColumnIndex(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1)));
-                    geciciListe.setTarih(cursor.getString(cursor.getColumnIndex(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1)));
-                    suzTumCetvelListe.add(geciciListe);
-                }
-                cursor.close();
+            while (cursor.moveToNext()) {
+                Liste geciciListe = new Liste();
+                geciciListe.setId(cursor.getInt(cursor.getColumnIndex(Sabitler.TblCetvelClass.CETVEL_ID)));
+                geciciListe.setAciklama(cursor.getString(cursor.getColumnIndex(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1)));
+                geciciListe.setTarih(cursor.getString(cursor.getColumnIndex(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1)));
+                suzTumCetvelListe.add(geciciListe);
             }
-
-            mRecAdapter = new RecAdapter(this, suzTumCetvelListe);
-            mRecyclerView.setAdapter(mRecAdapter);
-            mRecAdapter.notifyDataSetChanged();
+            cursor.close();
         }
 
+        mRecAdapter = new RecAdapter(this, suzTumCetvelListe);
+        mRecyclerView.setAdapter(mRecAdapter);
+        mRecAdapter.notifyDataSetChanged();
+    }
 
-        // MENÜ İŞLEMLERİ
-        @Override
-        public boolean onCreateOptionsMenu (Menu menu){
-            getMenuInflater().inflate(R.menu.menu_main, menu);
+
+    // MENÜ İŞLEMLERİ
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+
+            case R.id.ekle:
+                yeniVeriEkranı();
+                break;
+
+            case R.id.suz:
+                suzgecFragmentAc();
+                break;
+
+            case R.id.aySil:
+                aySil();
+                break;
+
+            case R.id.veriTabanınıSil:
+                veriTabanınıSil();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(true);
             return true;
         }
-
-        @Override
-        public boolean onOptionsItemSelected (MenuItem item){
-            int id = item.getItemId();
-
-            switch (id) {
-
-                case R.id.ekle:
-                    yeniVeriEkranı();
-                    break;
-
-                case R.id.suz:
-                    suzgecFragmentAc();
-                    break;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-
-        @Override
-        public boolean onKeyDown ( int keyCode, KeyEvent event){
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                moveTaskToBack(true);
-                return true;
-            }
-            return super.onKeyDown(keyCode, event);
-        }//SANAL GERİ TUŞU İLE ÇIKIŞ
-        // MENÜ İŞLEMLERİ
+        return super.onKeyDown(keyCode, event);
+    }//SANAL GERİ TUŞU İLE ÇIKIŞ
+    // MENÜ İŞLEMLERİ
 
     private void suzgecFragmentAc() {
 
@@ -353,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void suzDataguncelle() {
+    public void suzupVerileriListele() {
 
         suzTumCetvelListe = suzTumCetvelListe();//METOD AŞAĞIDA tumCetvelListe()
         mRecAdapter = new RecAdapter(this, suzTumCetvelListe);
@@ -402,15 +364,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             cursor.close();
         }
-//        Toast.makeText(this, "Süzülen Kayıt Sayısı: " + suzTumCetvelListe.size(), Toast.LENGTH_SHORT).show();
-        return suzTumCetvelListe;
+        Toast.makeText(this, "Süzülen Kayıt Sayısı: " + suzTumCetvelListe.size(), Toast.LENGTH_SHORT).show();
 
+
+        if (shrTrAy.equalsIgnoreCase("Seçiniz")) {
+        } else {
+            mtxtAy.setText(shrTrAy);
+        }
+
+        return suzTumCetvelListe;
     }
 
+    private void guncel_Tarih_Yoksa_VeriOlustur() {
+        simdiStrDizi = Tarihler.simdiOlustur();
+        ayinGunleriDizi = Tarihler.ayinGunleri();
 
-    public void tariheGoreVeriOlustur() {
+        guncel_Tarih_Yoksa_VeriOlustur_Devam();
+    }
+
+    public void guncel_Tarih_Yoksa_VeriOlustur_Devam() {
+
         String selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
-        String[] selectionArgs = {"%." + sonAyStr + "." + sonYilStr + "%"};
+        String[] selectionArgs = {"%." + simdiStrDizi[1] + "." + simdiStrDizi[2] + "%"};
         final Cursor cursor = getContentResolver().query(Provider.CETVEL_CONTENT_URI, null,
                 selection, selectionArgs, null);
         final int cursorCount = cursor.getCount();
@@ -428,7 +403,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             ContentValues contentValues = new ContentValues();
 
                             String soni2;
-                            for (int i2 = 1; i2 <= aydakiGunSayısı; i2++) {
+                            for (int i2 = 1; i2 <= ayinGunleriDizi[0]; i2++) {
 
                                 if (String.valueOf(i2).length() < 2) {
                                     soni2 = String.valueOf(i2);
@@ -437,8 +412,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     soni2 = String.valueOf(i2);
                                 }
 
-                                contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, soni2 + "." + sonAyStr + "" + "" +
-                                        "." + sonYilStr);
+                                contentValues.put(Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, soni2 + "." + simdiStrDizi[1] + "" + "" +
+                                        "." + simdiStrDizi[2]);
 
                                 Uri uri = getContentResolver().insert(Provider.CETVEL_CONTENT_URI, contentValues);
                             }
@@ -447,7 +422,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String soni3;
                             ContentValues contentValues2 = new ContentValues();
 
-                            for (int i3 = ilkCumartesi; i3 <= aydakiGunSayısı; i3 += 7) {
+                            for (int i3 = ayinGunleriDizi[1]; i3 <= ayinGunleriDizi[0]; i3 += 7) {
                                 if (String.valueOf(i3).length() < 2) {
                                     soni3 = String.valueOf(i3);
                                     soni3 = "0" + soni3;
@@ -456,7 +431,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
 
                                 String select = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " = ?";
-                                String[] args = {soni3 + "." + sonAyStr + "." + sonYilStr};
+                                String[] args = {soni3 + "." + simdiStrDizi[1] + "." + simdiStrDizi[2]};
 
                                 contentValues2.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, "Cumartesi");
                                 getContentResolver().update(Provider.CETVEL_CONTENT_URI, contentValues2, select, args);
@@ -465,7 +440,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String soni4;
                             ContentValues contentValues3 = new ContentValues();
 
-                            for (int i4 = ilkCumartesi + 1; i4 <= aydakiGunSayısı; i4 = i4 + 7) {
+                            for (int i4 = ayinGunleriDizi[1] + 1; i4 <= ayinGunleriDizi[0]; i4 = i4 + 7) {
                                 if (String.valueOf(i4).length() < 2) {
                                     soni4 = String.valueOf(i4);
                                     soni4 = "0" + soni4;
@@ -473,7 +448,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     soni4 = String.valueOf(i4);
                                 }
                                 String select = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " = ?";
-                                String[] args = {soni4 + "." + sonAyStr + "." + sonYilStr};
+                                String[] args = {soni4 + "." + simdiStrDizi[1] + "." + simdiStrDizi[2]};
 
                                 contentValues3.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, "Pazar");
                                 getContentResolver().update(Provider.CETVEL_CONTENT_URI, contentValues3, select, args);
@@ -482,7 +457,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
 
-//                            Toast.makeText(context, "Kayıt Yapılan Sayı: " + aydakiGunSayısı, Toast.LENGTH_LONG).show();
                         }
                     })
                     .setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
@@ -493,6 +467,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
         cursor.close();
+
+
+        if (simdiStrDizi[1].length() < 2) {
+            String ayTxt = "0" + simdiStrDizi[1];
+            mtxtAy.setText(ayTxt);
+
+        } else {
+            mtxtAy.setText(simdiStrDizi[1]);
+        }
+
     }
 
     public void sharedPrefencesAl_VeriSuz() {
@@ -502,19 +486,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         shrGelenTur = preferences.getString("shrTur", "Sonuç Yok");
         shrTrAy = preferences.getString("shrAy", "Sonuç Yok");
         shrTrYil = preferences.getString("shrYil", "Sonuç Yok");
-//
-//        if (shrTrAy.equalsIgnoreCase("Seçiniz")){
-//
-//        }else {
-//
-//            if(shrTrAy.startsWith("0")){
-//                mtxtAy.setText(shrTrAy.substring(1,2));
-//            }else {
-//                mtxtAy.setText(shrTrAy);
-//            }
-//
-//        }
-
     }
+
+    private void veriTabanınıSil() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        alertDialog.setTitle("Dikkat!")
+                .setIcon(R.drawable.ic_announcement)
+                .setMessage("Tüm Veri Tabanı Silinecektir." + "\n" + "Geri Dönüş Mümkün Değildir." + "\n" + "Tüm Veriler " +
+                        "Silinsin mi?")
+                .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                getContentResolver().delete(Provider.CETVEL_CONTENT_URI, null, null);
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                            }
+                        }).setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).show();
+    }
+
+    private void aySil() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        alertDialog.setTitle("Dikkat!")
+                .setIcon(R.drawable.ic_announcement)
+                .setMessage("Seçmiş Olduğunuz Ay" + "\n" + "Veri Tabanından Silinecektir." +
+                        "." + "\n" + "Veriler Silinsin mi?")
+                .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
+                        String selectionArgs [] = new String[]{"%." + mtxtAy.getText().toString() + "." + shrTrYil + "%"};
+
+                        getContentResolver().delete(Provider.CETVEL_CONTENT_URI, selection, selectionArgs);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                }).setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).show();
+    }
+
 }
 

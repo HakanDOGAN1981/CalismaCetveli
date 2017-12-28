@@ -11,4 +11,15 @@
         android:icon="@drawable/ic_check"
         android:title="Süzgeç Ekle"></item>
 
+    <item
+        android:id="@+id/aySil"
+        android:icon="@drawable/ic_check"
+        android:title="Görünen Ayı Sil"></item>
+
+    <item
+        android:id="@+id/veriTabanınıSil"
+        android:icon="@drawable/ic_check"
+        android:title="Veri Tabanını Temizle"></item>
+
+
 </menu>
