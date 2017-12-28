@@ -17,7 +17,7 @@
         android:id="@+id/Recyclerview"
         android:layout_width="match_parent"
         android:layout_height="440dp"
-        android:background="@color/colorPrimaryTransparanDarkgreen"
+        android:background="#D9212121"
         app:layout_constraintTop_toBottomOf="@+id/toolbarx"></android.support.v7.widget.RecyclerView>
 
     <Button
