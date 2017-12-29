@@ -4,13 +4,13 @@
 
     <string-array name="spinner_tur">
         <item>Giriş Türünü Seçiniz</item>
+        <item>Teftiş</item>
+        <item>Rapor</item>
+        <item>Yazı</item>
+        <item>Bildirim</item>
         <item>Yolculuk</item>
         <item>Konaklama</item>
         <item>Dosya İncelemesi</item>
-        <item>Teftiş</item>
-        <item>Bildirim</item>
-        <item>Rapor</item>
-        <item>Yazı</item>
         <item>Diğer</item>
     </string-array>
 

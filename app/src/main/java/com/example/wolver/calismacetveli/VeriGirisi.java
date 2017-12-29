@@ -86,7 +86,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                     } else {
                         txtDegisimi();
                         mTxtAciklama1.requestFocus();
-                        mTxtAciklama1.selectAll();
+                        mTxtAciklama1.setSelection(mTxtAciklama1.length());
                     }
                 }
 
@@ -402,7 +402,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                             } else {
                                 txtDegisimi();
                                 mTxtAciklama1.requestFocus();
-                                mTxtAciklama1.selectAll();
+                                mTxtAciklama1.setSelection(mTxtAciklama1.length());
                             }
                         }
 

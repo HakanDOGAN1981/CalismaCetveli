@@ -3,6 +3,7 @@ package com.example.wolver.calismacetveli.adapter;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -31,9 +32,8 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
 
     public LayoutInflater mInflater;
     public ArrayList<Liste> tumCetvelListesi;
-
-    private ContentResolver contentResolver;
     Context mContext;
+    private ContentResolver contentResolver;
 
     public RecAdapter(Context context, ArrayList<Liste> liste) {
         mContext = context;
@@ -125,15 +125,26 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
+                        ContentValues values = new ContentValues();
+                        values.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, "");
+
                         Liste silinecek = tumCetvelListesi.get(position);
                         int silinecekID = silinecek.getId();
+                        String silinecekTr = silinecek.getTarih();
+
+                        Liste eklenecek = tumCetvelListesi.get(position);
+                        eklenecek.setAciklama("");
+                        eklenecek.setTarih(silinecekTr);
+                        eklenecek.setId(silinecekID);
 
                         String selection = Sabitler.TblCetvelClass.CETVEL_ID + " = " + silinecekID;
-                        int etkilenen = contentResolver.delete(Provider.CETVEL_CONTENT_URI, selection, null);
+                        int etkilenen = contentResolver.update(Provider.CETVEL_CONTENT_URI, values, selection, null);
 
                         if (etkilenen != 0) {
                         }
+
                         tumCetvelListesi.remove(silinecek);
+                        tumCetvelListesi.add(position, eklenecek);
                         notifyDataSetChanged();
 
                     }
