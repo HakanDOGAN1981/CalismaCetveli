@@ -59,26 +59,27 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
         holder.mTextİcerik.setText(tumCetvelListesi.get(position).getAciklama());
 
         if (holder.mTextİcerik.getText().equals("")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6030404"));//ANA RENK
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK #546e7a
             holder.mTextİcerik.setTextColor(Color.parseColor("#AD1457"));//KIRMIZI
             holder.mTextTarih.setTextColor(Color.parseColor("#AD1457"));//KIRMIZI
         }
 
         if (holder.mTextİcerik.getText().equals("Cumartesi") || holder.mTextİcerik.getText().equals("Pazar")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#FF263238"));//colorSecondary2TransparanTacha
+//            holder.itemView.setBackgroundColor(Color.parseColor("#FF263238"));//colorSecondary2TransparanTacha
+            holder.itemView.setBackgroundColor(Color.parseColor("#F2212121"));
             holder.mTextİcerik.setTextColor(Color.parseColor("#030404"));//colorPrimaryDarkgreen
             holder.mTextTarih.setTextColor(Color.parseColor("#030404"));//colorPrimaryDarkgreen
         }
 
         if (holder.mTextİcerik.getText().toString().contains("Dosya")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6030404"));//ANA RENK
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK
             holder.mTextİcerik.setTextColor(Color.parseColor("#C7BB5C"));//colorSecondary2Tacha
             holder.mTextTarih.setTextColor(Color.parseColor("#C7BB5C"));//colorSecondary2Tacha
         }
 
         if (holder.mTextİcerik.getText().toString().contains("Yolculuk") || holder.mTextİcerik.getText().toString().contains
                 ("Konaklama")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6030404"));//ANA RENK
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK
             holder.mTextİcerik.setTextColor(Color.parseColor("#19ACF3"));//colorSecondaryDodgerBlue
             holder.mTextTarih.setTextColor(Color.parseColor("#19ACF3"));//colorSecondaryDodgerBlue
         }
@@ -86,7 +87,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
 
         if (holder.mTextİcerik.getText().toString().contains("Teftiş") || holder.mTextİcerik.getText().toString().contains
                 ("Bildirim")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6030404"));//ANA RENK
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK
             holder.mTextİcerik.setTextColor(Color.parseColor("#D6D7D6"));//WHİTESMOKE
             holder.mTextTarih.setTextColor(Color.parseColor("#D6D7D6"));//WHİTESMOKE
         }
@@ -94,13 +95,13 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
 
         if (holder.mTextİcerik.getText().toString().contains("Rapor") || holder.mTextİcerik.getText().toString().contains
                 ("Yazı")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6030404"));//ANA RENK
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK
             holder.mTextİcerik.setTextColor(Color.parseColor("#43A047"));//YEŞİL
             holder.mTextTarih.setTextColor(Color.parseColor("#43A047"));//YEŞİL
         }
 
         if (holder.mTextİcerik.getText().toString().contains("Diğer")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6030404"));//ANA RENK
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK
             holder.mTextİcerik.setTextColor(Color.parseColor("#5C6BC0"));//İNDİGO
             holder.mTextTarih.setTextColor(Color.parseColor("#5C6BC0"));//İNDİGO
         }
@@ -120,7 +121,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
         final int pozisyon = position;
         alertDialog.setTitle("Dikkat!")
                 .setIcon(R.drawable.ic_announcement)
-                .setMessage("Kayıt Silinsin mi?")
+                .setMessage("Kayıdın İçeriği Silinsin mi?")
                 .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -145,6 +146,46 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
 
                         tumCetvelListesi.remove(silinecek);
                         tumCetvelListesi.add(position, eklenecek);
+                        notifyDataSetChanged();
+
+                    }
+                })
+                .setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        notifyDataSetChanged();
+                    }
+                }).show();
+
+
+    }
+
+
+    public void swipeIleYoket (final int position) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+        final int pozisyon = position;
+        alertDialog.setTitle("Dikkat!")
+                .setIcon(R.drawable.ic_announcement)
+                .setMessage("Kayıt Tablodan Silinsin mi?")
+                .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        ContentValues values = new ContentValues();
+                        values.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, "");
+
+                        Liste silinecek = tumCetvelListesi.get(position);
+                        int silinecekID = silinecek.getId();
+                        String silinecekTr = silinecek.getTarih();
+
+                        String selection = Sabitler.TblCetvelClass.CETVEL_ID + " = " + silinecekID;
+                        int etkilenen = contentResolver.update(Provider.CETVEL_CONTENT_URI, values, selection, null);
+
+                        if (etkilenen != 0) {
+                        }
+
+                        tumCetvelListesi.remove(silinecek);
                         notifyDataSetChanged();
 
                     }

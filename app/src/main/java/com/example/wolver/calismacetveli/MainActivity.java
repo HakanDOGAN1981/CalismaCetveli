@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public ArrayList<Liste> tumCetvelListe() {
-
         String[] projection = {Sabitler.TblCetvelClass.CETVEL_ID, Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, Sabitler
                 .TblCetvelClass.CETVEL_TARIH_BAS_1};
         Cursor cursor = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, null,
@@ -243,6 +242,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .TblCetvelClass.CETVEL_TARIH_BAS_1};
 
         selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
+
+        if (shrTrYil.equalsIgnoreCase("Seçiniz")) {
+            shrTrYil = Tarihler.simdiYilStr;
+        }
+
         selectionArgs = new String[]{"%." + mtxtAy.getText().toString() + "." + shrTrYil + "%"};
 
         Cursor cursor = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, selectionArgs, null);
@@ -495,13 +499,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setMessage("Tüm Veri Tabanı Silinecektir." + "\n" + "Geri Dönüş Mümkün Değildir." + "\n" + "Tüm Veriler " +
                         "Silinsin mi?")
                 .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                getContentResolver().delete(Provider.CETVEL_CONTENT_URI, null, null);
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
-                            }
-                        }).setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        getContentResolver().delete(Provider.CETVEL_CONTENT_URI, null, null);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                }).setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -519,7 +523,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
-                        String selectionArgs [] = new String[]{"%." + mtxtAy.getText().toString() + "." + shrTrYil + "%"};
+                        String selectionArgs[] = new String[]{"%." + mtxtAy.getText().toString() + "." + shrTrYil + "%"};
 
                         getContentResolver().delete(Provider.CETVEL_CONTENT_URI, selection, selectionArgs);
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);

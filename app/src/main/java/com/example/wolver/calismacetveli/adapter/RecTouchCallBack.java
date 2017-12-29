@@ -43,7 +43,8 @@ public class RecTouchCallBack extends ItemTouchHelper.Callback {
 
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-        return makeMovementFlags(0, ItemTouchHelper.END);
+        final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END ;
+        return makeMovementFlags(0, swipeFlags);
     }
 
     @Override
@@ -64,6 +65,11 @@ public class RecTouchCallBack extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 
-        mSwipeListener.swipeIleSil(viewHolder.getAdapterPosition());
+        if (direction == ItemTouchHelper.END) {
+            mSwipeListener.swipeIleSil(viewHolder.getAdapterPosition());
+        }
+        if (direction == ItemTouchHelper.START) {
+            mSwipeListener.swipeIleYoket(viewHolder.getAdapterPosition());
+        }
     }
 }
