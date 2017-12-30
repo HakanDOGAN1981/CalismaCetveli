@@ -422,7 +422,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Uri uri = getContentResolver().insert(Provider.CETVEL_CONTENT_URI, contentValues);
                             }
 
-
                             String soni3;
                             ContentValues contentValues2 = new ContentValues();
 
@@ -460,7 +459,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
-
                         }
                     })
                     .setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
@@ -468,10 +466,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         public void onClick(DialogInterface dialogInterface, int i) {
                         }
                     }).show();
-
         }
         cursor.close();
-
 
         if (simdiStrDizi[1].length() < 2) {
             String ayTxt = "0" + simdiStrDizi[1];
@@ -480,7 +476,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             mtxtAy.setText(simdiStrDizi[1]);
         }
-
     }
 
     public void sharedPrefencesAl_VeriSuz() {
