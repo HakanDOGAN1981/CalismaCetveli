@@ -172,15 +172,12 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        ContentValues values = new ContentValues();
-                        values.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, "");
-
                         Liste silinecek = tumCetvelListesi.get(position);
                         int silinecekID = silinecek.getId();
                         String silinecekTr = silinecek.getTarih();
 
                         String selection = Sabitler.TblCetvelClass.CETVEL_ID + " = " + silinecekID;
-                        int etkilenen = contentResolver.update(Provider.CETVEL_CONTENT_URI, values, selection, null);
+                        int etkilenen = contentResolver.delete(Provider.CETVEL_CONTENT_URI,  selection, null);
 
                         if (etkilenen != 0) {
                         }
