@@ -1,6 +1,7 @@
 package com.example.wolver.calismacetveli;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,9 +23,6 @@ public class Analiz extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.analiz);
 
-        ay = getIntent().getExtras().getString("ay", "yok");
-        yil = getIntent().getExtras().getString("yil", "yok");
-
         txtTrh = (TextView) findViewById(R.id.txtTrh);
         txtTef = (TextView) findViewById(R.id.txtTef);
         txtRp = (TextView) findViewById(R.id.txtRp);
@@ -38,10 +36,20 @@ public class Analiz extends AppCompatActivity {
         txtDiger = (TextView) findViewById(R.id.txtDiger);
         txtDigerTl = (TextView) findViewById(R.id.txtDigerTl);
 
+        yil = sharedprefencesAl();
+        ay = MainActivity.ayAnaliz;
+
         txtTrh.setText(ay + "." + yil);
 
         textleriDoldur();
 
+    }
+
+    public String sharedprefencesAl() {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("share", MODE_PRIVATE);
+        yil = sharedPreferences.getString("shrYil", "yok");
+        return yil;
     }
 
     private void textleriDoldur() {
@@ -58,24 +66,30 @@ public class Analiz extends AppCompatActivity {
                 .CETVEL_ACIKLAMA_1 + " LIKE ?";
 
         String suzTef = "Teftiş";
-        String[] args1 = {"%." + ay + "." + yil + "%", "%" + suzTef + "%"};
+        String[] argsTef = {"%." + ay + "." + yil + "%", "%" + suzTef + "%"};
+        Cursor crTef = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, argsTef, null);
 
-        Toast.makeText(context,args1[0].toString(), Toast.LENGTH_LONG).show();
+        String suzRp = "Rapor";
+        String[] argRp = {"%." + ay + "." + yil + "%", "%" + suzRp + "%"};
+        Cursor crRp = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, argRp, null);
 
-        Cursor crTef = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, args1, null);
+        String suzYz = "Yazı";
+        String[] argsYz = {"%." + ay + "." + yil + "%", "%" + suzYz + "%"};
+        Cursor crYz = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, argsYz, null);
 
-        if (crTef.getCount() == 0) {
-            txtTef.setText("0");
-        } else {
-            txtTef.setText("" + crTef.getCount());
-        }
+        String suzBd = "Bildirim";
+        String[] argsBd = {"%." + ay + "." + yil + "%", "%" + suzBd + "%"};
+        Cursor crBd = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, argsBd, null);
 
-//        if (crTef != null) {
-//            if (crTef.moveToNext()) {
-//
-//            }
-//        }
+        String suzDos = "Dosya";
+        String[] argsDos = {"%." + ay + "." + yil + "%", "%" + suzDos + "%"};
+        Cursor crDos = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, argsDos, null);
 
+        txtTef.setText("" + crTef.getCount());
+        txtRp.setText("" + crRp.getCount());
+        txtYz.setText("" + crYz.getCount());
+        txtBd.setText("" + crBd.getCount());
+        txtDos.setText("" + crDos.getCount());
     }
 
     private void harcamalar() {

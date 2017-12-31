@@ -210,4 +210,5 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
             mTextİcerik = itemView.findViewById(R.id.textIcerik);
         }
     }
+
 }

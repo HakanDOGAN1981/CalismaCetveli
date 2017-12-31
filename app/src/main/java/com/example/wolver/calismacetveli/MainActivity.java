@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String shrTrAy;
     String shrTrYil;
 
+    public static String ayAnaliz;
+
     int mTxtAyInt;
 
     String[] simdiStrDizi = new String[3];
@@ -208,8 +210,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             if (String.valueOf(mTxtAyInt).toString().length() < 2) {
                 mtxtAy.setText("0" + mTxtAyInt);
+                ayAnaliz = "" + mTxtAyInt;
             } else {
                 mtxtAy.setText("" + mTxtAyInt);
+                ayAnaliz = "" + mTxtAyInt;
             }
             ileri_Geri_Ay();
         }
@@ -223,8 +227,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if (String.valueOf(mTxtAyInt).toString().length() < 2) {
                 mtxtAy.setText("0" + mTxtAyInt);
+                ayAnaliz = "" + mTxtAyInt;
             } else {
                 mtxtAy.setText("" + mTxtAyInt);
+                ayAnaliz = "" + mTxtAyInt;
             }
 
             ileri_Geri_Ay();
@@ -232,14 +238,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (view.getId() == R.id.btnAnaliz) {
             Intent analiz = new Intent(context, Analiz.class);
-            suzTumCetvelListe = suzTumCetvelListe();
-            Liste liste = suzTumCetvelListe.get(1);
-            String trh = liste.getTarih();
-            String trhAy = trh.substring(3, 5);
-            String trhYil = trh.substring(6, trh.length());
-            analiz.putExtra("ay", trhAy);
-            analiz.putExtra("yil", trhYil);
-            startActivity(analiz);
+
+            if (shrGelenInt == 4) {
+                startActivity(analiz);
+            } else {
+                startActivity(analiz);
+            }
         }
     }
 
@@ -278,6 +282,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecAdapter = new RecAdapter(this, suzTumCetvelListe);
         mRecyclerView.setAdapter(mRecAdapter);
         mRecAdapter.notifyDataSetChanged();
+
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("analiz", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("ay", mtxtAy.getText().toString());
+        editor.putString("yil", shrTrYil);
+        editor.commit();
     }
 
 
@@ -385,6 +396,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (shrTrAy.equalsIgnoreCase("Seçiniz")) {
         } else {
             mtxtAy.setText(shrTrAy);
+            ayAnaliz = "" + shrTrAy;
+
         }
 
         return suzTumCetvelListe;
