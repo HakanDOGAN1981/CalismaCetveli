@@ -25,6 +25,7 @@
             android:name=".VeriGirisi"
             android:label="@string/title_activity_veri_girisi"
             android:theme="@style/AppTheme" />
+        <activity android:name=".Analiz"></activity>
     </application>
 
 </manifest>

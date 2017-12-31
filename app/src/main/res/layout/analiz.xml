@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.wolver.calismacetveli.Analiz">
+
+
+    <include
+        android:id="@+id/toolbarx"
+        layout="@layout/toolbar"></include>
+
+    <TextView
+        android:id="@+id/txtTrh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="16dp"
+        android:text="Tarih Aralığı"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarx" />
+
+    <TextView
+        android:id="@+id/txtTef1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Teftiş Sayısı: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTrh" />
+
+    <TextView
+        android:id="@+id/txtRp1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Rapor Sayısı: "
+        app:layout_constraintStart_toStartOf="@+id/txtTef1"
+        app:layout_constraintTop_toBottomOf="@+id/txtTef1" />
+
+    <TextView
+        android:id="@+id/txtYz1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Yazı Sayısı: "
+        app:layout_constraintStart_toStartOf="@+id/txtTef1"
+        app:layout_constraintTop_toBottomOf="@+id/txtRp1" />
+
+    <TextView
+        android:id="@+id/txtBd1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Bildirim Sayısı: "
+        app:layout_constraintStart_toStartOf="@+id/txtTef1"
+        app:layout_constraintTop_toBottomOf="@+id/txtYz1" />
+
+    <TextView
+        android:id="@+id/txtDos1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Dosya İnceleme: "
+        app:layout_constraintStart_toStartOf="@+id/txtTef1"
+        app:layout_constraintTop_toBottomOf="@+id/txtBd1" />
+
+    <TextView
+        android:id="@+id/txtDiger1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Diğer Gün Sayısı: "
+        app:layout_constraintStart_toStartOf="@+id/txtTef1"
+        app:layout_constraintTop_toBottomOf="@+id/txtDos1" />
+
+
+    <TextView
+        android:id="@+id/txtTopTl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Tolam Gider: "
+        app:layout_constraintStart_toStartOf="@+id/txtTef1"
+        app:layout_constraintTop_toBottomOf="@+id/txtDiger1" />
+
+    <TextView
+        android:id="@+id/txtTaksi1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Taksi Gideri: "
+        app:layout_constraintStart_toStartOf="@+id/txtTef1"
+        app:layout_constraintTop_toBottomOf="@+id/txtTopTl1" />
+
+    <TextView
+        android:id="@+id/txtOtobus1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Otobüs Gideri: "
+        app:layout_constraintStart_toStartOf="@+id/txtTef1"
+        app:layout_constraintTop_toBottomOf="@+id/txtTaksi1" />
+
+    <TextView
+        android:id="@+id/txtKonak1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Konaklama Gideri: "
+        app:layout_constraintStart_toStartOf="@+id/txtTef1"
+        app:layout_constraintTop_toBottomOf="@+id/txtOtobus1" />
+
+
+    <TextView
+        android:id="@+id/txtDigerTl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Diğer Giderler: "
+        app:layout_constraintStart_toStartOf="@+id/txtTef1"
+        app:layout_constraintTop_toBottomOf="@+id/txtKonak1" />
+
+
+
+    ----------------------------------------------------------------
+
+
+    <TextView
+        android:id="@+id/txtTef"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
+        android:text="Sayısı"
+        app:layout_constraintStart_toEndOf="@+id/txtTef1"
+        app:layout_constraintTop_toBottomOf="@+id/txtTrh" />
+
+    <TextView
+        android:id="@+id/txtRp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Sayısı"
+        app:layout_constraintStart_toStartOf="@+id/txtTef"
+        app:layout_constraintTop_toBottomOf="@+id/txtTef" />
+
+    <TextView
+        android:id="@+id/txtYz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Sayısı"
+        app:layout_constraintStart_toStartOf="@+id/txtTef"
+        app:layout_constraintTop_toBottomOf="@+id/txtRp" />
+
+    <TextView
+        android:id="@+id/txtBd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Sayısı"
+        app:layout_constraintStart_toStartOf="@+id/txtTef"
+        app:layout_constraintTop_toBottomOf="@+id/txtYz" />
+
+    <TextView
+        android:id="@+id/txtDos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Sayısı"
+        app:layout_constraintStart_toStartOf="@+id/txtTef"
+        app:layout_constraintTop_toBottomOf="@+id/txtBd" />
+
+    <TextView
+        android:id="@+id/txtDiger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Sayısı"
+        app:layout_constraintStart_toStartOf="@+id/txtTef"
+        app:layout_constraintTop_toBottomOf="@+id/txtDos" />
+
+
+    <TextView
+        android:id="@+id/txtTopTl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="TL"
+        app:layout_constraintStart_toStartOf="@+id/txtTef"
+        app:layout_constraintTop_toBottomOf="@+id/txtDiger" />
+
+    <TextView
+        android:id="@+id/txtTaksi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TL"
+        app:layout_constraintStart_toStartOf="@+id/txtTef"
+        app:layout_constraintTop_toBottomOf="@+id/txtTopTl" />
+
+    <TextView
+        android:id="@+id/txtOtobus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TL"
+        app:layout_constraintStart_toStartOf="@+id/txtTef"
+        app:layout_constraintTop_toBottomOf="@+id/txtTaksi" />
+
+    <TextView
+        android:id="@+id/txtKonak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TL"
+        app:layout_constraintStart_toStartOf="@+id/txtTef"
+        app:layout_constraintTop_toBottomOf="@+id/txtOtobus" />
+
+
+    <TextView
+        android:id="@+id/txtDigerTl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TL"
+        app:layout_constraintStart_toStartOf="@+id/txtTef"
+        app:layout_constraintTop_toBottomOf="@+id/txtKonak" />
+
+
+</android.support.constraint.ConstraintLayout>

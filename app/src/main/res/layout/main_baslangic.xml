@@ -25,7 +25,7 @@
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="16dp"
         android:onClick="onClick"
         android:text="SÜZ"
         android:textAllCaps="false"
@@ -35,11 +35,28 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
+        android:id="@+id/btnAnaliz"
+        android:layout_width="118dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:onClick="onClick"
+        android:text="ANALİZ"
+        android:textAllCaps="false"
+        android:textColor="@color/degisentextrengi"
+        android:theme="@style/MyButton2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnVeriGiris"
+        app:layout_constraintStart_toEndOf="@id/btnSuz" />
+
+
+    <Button
         android:id="@+id/btnVeriGiris"
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="16dp"
         android:onClick="onClick"
         android:text="YENİ VERİ"
         android:textAllCaps="false"

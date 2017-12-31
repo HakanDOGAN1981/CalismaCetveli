@@ -230,6 +230,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ileri_Geri_Ay();
         }
 
+        if (view.getId() == R.id.btnAnaliz) {
+            Intent analiz = new Intent(context, Analiz.class);
+            suzTumCetvelListe = suzTumCetvelListe();
+            Liste liste = suzTumCetvelListe.get(1);
+            String trh = liste.getTarih();
+            String trhAy = trh.substring(3, 5);
+            String trhYil = trh.substring(6, trh.length());
+            analiz.putExtra("ay", trhAy);
+            analiz.putExtra("yil", trhYil);
+            startActivity(analiz);
+        }
     }
 
     private void ileri_Geri_Ay() {
@@ -380,6 +391,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void guncel_Tarih_Yoksa_VeriOlustur() {
+
         simdiStrDizi = Tarihler.simdiOlustur();
         ayinGunleriDizi = Tarihler.ayinGunleri();
 
