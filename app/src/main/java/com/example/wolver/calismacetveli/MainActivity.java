@@ -1,20 +1,28 @@
 package com.example.wolver.calismacetveli;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.icu.util.Output;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +42,14 @@ import com.example.wolver.calismacetveli.adapter.RecTouchCallBack;
 import com.example.wolver.calismacetveli.data.Provider;
 import com.example.wolver.calismacetveli.data.Sabitler;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -68,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String[] simdiStrDizi = new String[3];
     Integer[] ayinGunleriDizi = new Integer[2];
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +146,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }));
         // RECYCLERVIEW ONCLICK
 
+        //İZİN ALINDI-MANIFESTTEDE VAR
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        } else {
+
+        }
+        //İZİN ALINDI-MANIFESTTEDE VAR
     }
+
+    //İZİN ALINDI-MANIFESTTEDE VAR
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 2) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+    //İZİN ALINDI-MANIFESTTEDE VAR
 
     private void yeniVeriEkranı() {
         Intent yeniveri = new Intent(getApplicationContext(), VeriGirisi.class);
@@ -320,8 +355,70 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.veriTabanınıSil:
                 veriTabanınıSil();
                 break;
+
+            case R.id.veriTabanınıYedekle:
+                veriTabanınıYedekle();
+                break;
+
+            case R.id.veriTabanınıGuncelle:
+                veriTabanınıGuncelle();
+                break;
+
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void veriTabanınıGuncelle() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        alertDialog.setTitle("Dikkat!")
+                .setIcon(R.drawable.ic_announcement)
+                .setMessage("Yedeği Alınmış Olan" + "\n" + "Son Veri Tabanı Yüklenecektir." + "\n" + "Devam Edilsin mi?")
+                .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        try {
+                            File currentDB = new File("/data/data/com.example.wolver.almacetveli/databases/calisma.db");
+                            File backupDB = new File("/sdcard/Download/", "kopya_calisma.db");
+
+                            if (currentDB.exists()) {
+                                FileChannel src = new FileInputStream(backupDB).getChannel();
+                                FileChannel dst = new FileOutputStream(currentDB).getChannel();
+                                dst.transferFrom(src, 0, src.size());
+                                src.close();
+                                dst.close();
+                                Toast.makeText(getApplicationContext(), "Veri Tabanı Değiştirildi!!", Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(context, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        }).show();
+    }
+
+    private void veriTabanınıYedekle() {
+        try {
+            File currentDB = new File("/data/data/com.example.wolver.almacetveli/databases/calisma.db");
+            File backupDB = new File("/sdcard/Download/", "kopya_calisma.db");
+
+            if (currentDB.exists()) {
+                FileChannel src = new FileInputStream(currentDB).getChannel();
+                FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                dst.transferFrom(src, 0, src.size());
+                src.close();
+                dst.close();
+                Toast.makeText(getApplicationContext(), "Download Klasörüne Yedek Alındı.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

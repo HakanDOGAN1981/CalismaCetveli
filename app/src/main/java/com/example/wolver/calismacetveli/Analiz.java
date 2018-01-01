@@ -57,7 +57,13 @@ public class Analiz extends AppCompatActivity {
         mImg = (ImageView) findViewById(R.id.imageView2);
 
         yil = sharedprefencesAl();
-        ay = MainActivity.ayAnaliz;
+
+        if (String.valueOf(MainActivity.ayAnaliz).length() < 2) {
+            ay = String.valueOf(MainActivity.ayAnaliz);
+            ay = "0" + MainActivity.ayAnaliz;
+        } else {
+            ay = String.valueOf(MainActivity.ayAnaliz);
+        }
 
         txtTrh.setText(ay + "." + yil);
 
@@ -186,8 +192,10 @@ public class Analiz extends AppCompatActivity {
 
     private void harcamalar() {
 
-        String[] projection = {Sabitler.TblCetvelClass.CETVEL_GIDER_1};
-        Cursor crTL = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, null, null, null);
+        String[] projection = {Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, Sabitler.TblCetvelClass.CETVEL_GIDER_1};
+        String selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ?";
+        String[] args = {"%." + ay + "." + yil + "%"};
+        Cursor crTL = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, selection, args, null);
 
         int giderInt = 0;
         if (crTL != null) {
@@ -203,8 +211,8 @@ public class Analiz extends AppCompatActivity {
         }
 
 
-        String slTaksi = Sabitler.TblCetvelClass.CETVEL_GIDER_1 + " LIKE ?";
-        String[] argsTaksi = {"%Taksi%"};
+        String slTaksi = Sabitler.TblCetvelClass.CETVEL_GIDER_1 + " LIKE ? AND " + selection;
+        String[] argsTaksi = {"%Taksi%", args[0]};
         Cursor crTaksi = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, slTaksi, argsTaksi, null);
 
         int giderTaksiInt = 0;
@@ -220,8 +228,8 @@ public class Analiz extends AppCompatActivity {
             txtTaksi.setText("" + giderTaksiInt + " TL");
         }
 
-        String slOtobus = Sabitler.TblCetvelClass.CETVEL_GIDER_1 + " LIKE ?";
-        String[] argsOtobus = {"%Otobüs%"};
+        String slOtobus = Sabitler.TblCetvelClass.CETVEL_GIDER_1 + " LIKE ? AND " + selection;
+        String[] argsOtobus = {"%Otobüs%", args[0]};
         Cursor crOtobus = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, slOtobus, argsOtobus, null);
 
         int giderOtobusInt = 0;
@@ -237,8 +245,8 @@ public class Analiz extends AppCompatActivity {
             txtOtobus.setText("" + giderOtobusInt + " TL");
         }
 
-        String slKonak = Sabitler.TblCetvelClass.CETVEL_GIDER_1 + " LIKE ?";
-        String[] argsKonak = {"%Konaklama%"};
+        String slKonak = Sabitler.TblCetvelClass.CETVEL_GIDER_1 + " LIKE ? AND " + selection;
+        String[] argsKonak = {"%Konaklama%", args[0]};
         Cursor crKonak = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, slKonak, argsKonak, null);
 
         int giderKonakInt = 0;
@@ -254,8 +262,8 @@ public class Analiz extends AppCompatActivity {
             txtKonak.setText("" + giderKonakInt + " TL");
         }
 
-        String slDiger = Sabitler.TblCetvelClass.CETVEL_GIDER_1 + " LIKE ?";
-        String[] argsDiger = {"%Diğer%"};
+        String slDiger = Sabitler.TblCetvelClass.CETVEL_GIDER_1 + " LIKE ? AND " + selection;
+        String[] argsDiger = {"%Diğer%", args[0]};
         Cursor crDiger = getContentResolver().query(Provider.CETVEL_CONTENT_URI, projection, slDiger, argsDiger, null);
 
         int giderDigerInt = 0;

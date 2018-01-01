@@ -21,5 +21,15 @@
         android:icon="@drawable/ic_check"
         android:title="Veri Tabanını Temizle"></item>
 
+    <item
+        android:id="@+id/veriTabanınıYedekle"
+        android:icon="@drawable/ic_check"
+        android:title="Yedek Al"></item>
+
+    <item
+        android:id="@+id/veriTabanınıGuncelle"
+        android:icon="@drawable/ic_check"
+        android:title="Yedeği Yükle"></item>
+
 
 </menu>
