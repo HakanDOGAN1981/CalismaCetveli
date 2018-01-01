@@ -89,6 +89,19 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                         mTxtAciklama1.requestFocus();
                         mTxtAciklama1.setSelection(mTxtAciklama1.length());
                     }
+
+                    if (mSpinnerTur1.getSelectedItemPosition() == 6) {
+                        mTxtGider1.setText("Konaklama: ");
+                        mTxtGider1.requestFocus();
+                        mTxtGider1.setSelection(mTxtGider1.length());
+                    }
+
+                    if (mSpinnerTur1.getSelectedItemPosition() == 8) {
+                        mTxtGider1.setText("Diğer: ");
+                        mTxtGider1.requestFocus();
+                        mTxtGider1.setSelection(mTxtGider1.length());
+                    }
+
                 }
 
                 @Override
@@ -231,12 +244,12 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
             sonYil = yil;
         } else {
             sonGun = Integer.parseInt(mBtnGun);
-            sonAy = Integer.parseInt(mBtnAy)-1;
+            sonAy = Integer.parseInt(mBtnAy) - 1;
             sonYil = Integer.parseInt(mBtnYil);
         }
 
 
-        DatePickerDialog  datePickerDialog = new DatePickerDialog(context, AlertDialog.THEME_DEVICE_DEFAULT_DARK, new DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context, AlertDialog.THEME_DEVICE_DEFAULT_DARK, new DatePickerDialog
                 .OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -297,33 +310,33 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
             sonYil = yil;
         } else {
             sonGun = Integer.parseInt(mBtnGun);
-            sonAy = Integer.parseInt(mBtnAy)-1;
+            sonAy = Integer.parseInt(mBtnAy) - 1;
             sonYil = Integer.parseInt(mBtnYil);
         }
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(context, AlertDialog.THEME_DEVICE_DEFAULT_DARK, new
                 DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                String sonAyStr = null;
-                String sonDayStr = null;
-                int sonAy = month + 1;
-                if (String.valueOf(sonAy).length() < 2) {
-                    sonAyStr = String.valueOf(sonAy);
-                    sonAyStr = "0" + sonAyStr;
-                } else {
-                    sonAyStr = String.valueOf(sonAy);
-                }
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        String sonAyStr = null;
+                        String sonDayStr = null;
+                        int sonAy = month + 1;
+                        if (String.valueOf(sonAy).length() < 2) {
+                            sonAyStr = String.valueOf(sonAy);
+                            sonAyStr = "0" + sonAyStr;
+                        } else {
+                            sonAyStr = String.valueOf(sonAy);
+                        }
 
-                if (String.valueOf(day).length() < 2) {
-                    sonDayStr = String.valueOf(day);
-                    sonDayStr = "0" + sonDayStr;
-                } else {
-                    sonDayStr = String.valueOf(day);
-                }
-                mBtnBit1.setText(sonDayStr + "." + sonAyStr + "." + year);
-            }
-        }, sonYil, sonAy, sonGun);
+                        if (String.valueOf(day).length() < 2) {
+                            sonDayStr = String.valueOf(day);
+                            sonDayStr = "0" + sonDayStr;
+                        } else {
+                            sonDayStr = String.valueOf(day);
+                        }
+                        mBtnBit1.setText(sonDayStr + "." + sonAyStr + "." + year);
+                    }
+                }, sonYil, sonAy, sonGun);
         datePickerDialog.show();
     }
 

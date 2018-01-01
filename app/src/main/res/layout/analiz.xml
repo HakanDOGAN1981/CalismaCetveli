@@ -6,18 +6,28 @@
     android:layout_height="match_parent"
     tools:context="com.example.wolver.calismacetveli.Analiz">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbarx"></ImageView>
+
 
     <include
         android:id="@+id/toolbarx"
         layout="@layout/toolbar"></include>
 
+
+
     <TextView
         android:id="@+id/txtTrh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
+        android:layout_marginStart="150dp"
         android:layout_marginTop="16dp"
         android:text="Tarih Aralığı"
+        android:textColor="#90caf9"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbarx" />
 
@@ -25,9 +35,11 @@
         android:id="@+id/txtTef1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Teftiş Sayısı: "
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Teftiş Sayısı : "
+        android:textColor="@color/colorSecondary2Tacha"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTrh" />
 
@@ -36,7 +48,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Rapor Sayısı: "
+        android:text="Rapor Sayısı : "
+        android:textColor="@color/colorSecondary2Tacha"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtTef1"
         app:layout_constraintTop_toBottomOf="@+id/txtTef1" />
 
@@ -45,7 +59,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Yazı Sayısı: "
+        android:text="Yazı Sayısı : "
+        android:textColor="@color/colorSecondary2Tacha"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtTef1"
         app:layout_constraintTop_toBottomOf="@+id/txtRp1" />
 
@@ -54,7 +70,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Bildirim Sayısı: "
+        android:text="Bildirim Sayısı : "
+        android:textColor="@color/colorSecondary2Tacha"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtTef1"
         app:layout_constraintTop_toBottomOf="@+id/txtYz1" />
 
@@ -63,7 +81,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Dosya İnceleme: "
+        android:text="Dosya İnceleme : "
+        android:textColor="@color/colorSecondary2Tacha"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtTef1"
         app:layout_constraintTop_toBottomOf="@+id/txtBd1" />
 
@@ -72,9 +92,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Diğer Gün Sayısı: "
+        android:text="Diğer Gün Sayısı : "
+        android:textColor="@color/colorSecondary2Tacha"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtTef1"
         app:layout_constraintTop_toBottomOf="@+id/txtDos1" />
+
+    <TextView
+        android:id="@+id/txtHrc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Harcırahlı Gün Sayısı : "
+        android:textColor="@color/colorSecondary2Tacha"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/txtTef1"
+        app:layout_constraintTop_toBottomOf="@+id/txtDiger1" />
 
 
     <TextView
@@ -82,16 +115,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Tolam Gider: "
+        android:text="Toplam Gider : "
+        android:textColor="#f57c00"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtTef1"
-        app:layout_constraintTop_toBottomOf="@+id/txtDiger1" />
+        app:layout_constraintTop_toBottomOf="@+id/txtHrc" />
 
     <TextView
         android:id="@+id/txtTaksi1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Taksi Gideri: "
+        android:text="Taksi Gideri : "
+        android:textColor="#f57c00"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtTef1"
         app:layout_constraintTop_toBottomOf="@+id/txtTopTl1" />
 
@@ -100,7 +137,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Otobüs Gideri: "
+        android:text="Otobüs Gideri : "
+        android:textColor="#f57c00"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtTef1"
         app:layout_constraintTop_toBottomOf="@+id/txtTaksi1" />
 
@@ -109,7 +148,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Konaklama Gideri: "
+        android:text="Konaklama Gideri : "
+        android:textColor="#f57c00"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtTef1"
         app:layout_constraintTop_toBottomOf="@+id/txtOtobus1" />
 
@@ -119,10 +160,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Diğer Giderler: "
+        android:text="Diğer Giderler : "
+        android:textColor="#f57c00"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtTef1"
         app:layout_constraintTop_toBottomOf="@+id/txtKonak1" />
-
 
 
     ----------------------------------------------------------------
@@ -132,8 +174,8 @@
         android:id="@+id/txtTef"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="94dp"
+        android:layout_marginTop="32dp"
         android:text="Sayısı"
         app:layout_constraintStart_toEndOf="@+id/txtTef1"
         app:layout_constraintTop_toBottomOf="@+id/txtTrh" />
@@ -183,6 +225,14 @@
         app:layout_constraintStart_toStartOf="@+id/txtTef"
         app:layout_constraintTop_toBottomOf="@+id/txtDos" />
 
+    <EditText
+        android:id="@+id/edtHrc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="2"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/txtTef"
+        app:layout_constraintTop_toBottomOf="@+id/txtDiger" />
 
     <TextView
         android:id="@+id/txtTopTl"
@@ -190,8 +240,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="TL"
+        android:textColor="#ff5252"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtTef"
-        app:layout_constraintTop_toBottomOf="@+id/txtDiger" />
+        app:layout_constraintTop_toBottomOf="@+id/txtHrc" />
 
     <TextView
         android:id="@+id/txtTaksi"
@@ -199,6 +251,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="TL"
+        android:textColor="#ff5252"
         app:layout_constraintStart_toStartOf="@+id/txtTef"
         app:layout_constraintTop_toBottomOf="@+id/txtTopTl" />
 
@@ -208,6 +261,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="TL"
+        android:textColor="#ff5252"
         app:layout_constraintStart_toStartOf="@+id/txtTef"
         app:layout_constraintTop_toBottomOf="@+id/txtTaksi" />
 
@@ -217,6 +271,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="TL"
+        android:textColor="#ff5252"
         app:layout_constraintStart_toStartOf="@+id/txtTef"
         app:layout_constraintTop_toBottomOf="@+id/txtOtobus" />
 
@@ -227,8 +282,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="TL"
+        android:textColor="#ff5252"
         app:layout_constraintStart_toStartOf="@+id/txtTef"
         app:layout_constraintTop_toBottomOf="@+id/txtKonak" />
-
 
 </android.support.constraint.ConstraintLayout>

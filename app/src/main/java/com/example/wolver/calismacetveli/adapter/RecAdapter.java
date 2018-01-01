@@ -66,20 +66,20 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
 
         if (holder.mTextİcerik.getText().equals("Cumartesi") || holder.mTextİcerik.getText().equals("Pazar")) {
 //            holder.itemView.setBackgroundColor(Color.parseColor("#FF263238"));//colorSecondary2TransparanTacha
-            holder.itemView.setBackgroundColor(Color.parseColor("#F2212121"));
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));
             holder.mTextİcerik.setTextColor(Color.parseColor("#030404"));//colorPrimaryDarkgreen
             holder.mTextTarih.setTextColor(Color.parseColor("#030404"));//colorPrimaryDarkgreen
         }
 
         if (holder.mTextİcerik.getText().toString().contains("Dosya")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
             holder.mTextİcerik.setTextColor(Color.parseColor("#C7BB5C"));//colorSecondary2Tacha
             holder.mTextTarih.setTextColor(Color.parseColor("#C7BB5C"));//colorSecondary2Tacha
         }
 
         if (holder.mTextİcerik.getText().toString().contains("Yolculuk") || holder.mTextİcerik.getText().toString().contains
                 ("Konaklama")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
             holder.mTextİcerik.setTextColor(Color.parseColor("#19ACF3"));//colorSecondaryDodgerBlue
             holder.mTextTarih.setTextColor(Color.parseColor("#19ACF3"));//colorSecondaryDodgerBlue
         }
@@ -87,7 +87,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
 
         if (holder.mTextİcerik.getText().toString().contains("Teftiş") || holder.mTextİcerik.getText().toString().contains
                 ("Bildirim")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
             holder.mTextİcerik.setTextColor(Color.parseColor("#D6D7D6"));//WHİTESMOKE
             holder.mTextTarih.setTextColor(Color.parseColor("#D6D7D6"));//WHİTESMOKE
         }
@@ -95,13 +95,13 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
 
         if (holder.mTextİcerik.getText().toString().contains("Rapor") || holder.mTextİcerik.getText().toString().contains
                 ("Yazı")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
             holder.mTextİcerik.setTextColor(Color.parseColor("#43A047"));//YEŞİL
             holder.mTextTarih.setTextColor(Color.parseColor("#43A047"));//YEŞİL
         }
 
         if (holder.mTextİcerik.getText().toString().contains("Diğer")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
             holder.mTextİcerik.setTextColor(Color.parseColor("#5C6BC0"));//İNDİGO
             holder.mTextTarih.setTextColor(Color.parseColor("#5C6BC0"));//İNDİGO
         }
