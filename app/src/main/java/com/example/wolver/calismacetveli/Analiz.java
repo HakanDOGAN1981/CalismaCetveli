@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.service.autofill.RegexValidator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,15 +14,11 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.wolver.calismacetveli.data.Provider;
 import com.example.wolver.calismacetveli.data.Sabitler;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Analiz extends AppCompatActivity {
 

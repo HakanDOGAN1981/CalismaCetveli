@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-
 public class Provider extends ContentProvider {
 
     //   CONTENT PROVIDER SABİTLERİ TANIMLANIYOR

@@ -43,7 +43,7 @@ public class RecTouchCallBack extends ItemTouchHelper.Callback {
 
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-        final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END ;
+        final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
         return makeMovementFlags(0, swipeFlags);
     }
 

@@ -10,8 +10,8 @@ public class Tarihler {
     static int month, simdiAyInt, simdiYilInt, ilkGunInt, ilkCumartesiInt, aydakiGunSayısıInt, simdiGunInt,
             ilkCumartesiGerekliGunInt;
     static String simdiSonAyStr, ilkGunStr, aydakiGunSayısıStr, simdiSonGunStr, simdiYilStr;
-    static String [] simdiStrDizi;
-    static Integer [] ayinGunleriDizi;
+    static String[] simdiStrDizi;
+    static Integer[] ayinGunleriDizi;
 
     public static String[] simdiOlustur() {
         simdi = Calendar.getInstance();
