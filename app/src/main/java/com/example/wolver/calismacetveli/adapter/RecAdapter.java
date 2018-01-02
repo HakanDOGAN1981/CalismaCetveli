@@ -86,7 +86,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
             if (tarih.getTime() < simdi.getTime()) {
                 holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
             } else {
-                holder.itemView.setBackgroundColor(Color.parseColor("#E6263238"));
+                holder.itemView.setBackgroundColor(Color.parseColor("#E637474f"));
             }
             holder.mTextİcerik.setTextColor(Color.parseColor("#C7BB5C"));//colorSecondary2Tacha
             holder.mTextTarih.setTextColor(Color.parseColor("#C7BB5C"));//colorSecondary2Tacha
@@ -97,7 +97,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
             if (tarih.getTime() < simdi.getTime()) {
                 holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
             } else {
-                holder.itemView.setBackgroundColor(Color.parseColor("#E6263238"));
+                holder.itemView.setBackgroundColor(Color.parseColor("#E637474f"));
             }
             holder.mTextİcerik.setTextColor(Color.parseColor("#19ACF3"));//colorSecondaryDodgerBlue
             holder.mTextTarih.setTextColor(Color.parseColor("#19ACF3"));//colorSecondaryDodgerBlue
@@ -109,7 +109,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
             if (tarih.getTime() < simdi.getTime()) {
                 holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
             } else {
-                holder.itemView.setBackgroundColor(Color.parseColor("#E6263238"));
+                holder.itemView.setBackgroundColor(Color.parseColor("#E637474f"));
             }
             holder.mTextİcerik.setTextColor(Color.parseColor("#D6D7D6"));//WHİTESMOKE
             holder.mTextTarih.setTextColor(Color.parseColor("#D6D7D6"));//WHİTESMOKE
@@ -121,7 +121,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
             if (tarih.getTime() < simdi.getTime()) {
                 holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
             } else {
-                holder.itemView.setBackgroundColor(Color.parseColor("#E6263238"));
+                holder.itemView.setBackgroundColor(Color.parseColor("#E637474f"));
             }
             holder.mTextİcerik.setTextColor(Color.parseColor("#43A047"));//YEŞİL
             holder.mTextTarih.setTextColor(Color.parseColor("#43A047"));//YEŞİL
@@ -131,7 +131,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
             if (tarih.getTime() < simdi.getTime()) {
                 holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
             } else {
-                holder.itemView.setBackgroundColor(Color.parseColor("#E6263238"));
+                holder.itemView.setBackgroundColor(Color.parseColor("#E637474f"));
             }
             holder.mTextİcerik.setTextColor(Color.parseColor("#5C6BC0"));//İNDİGO
             holder.mTextTarih.setTextColor(Color.parseColor("#5C6BC0"));//İNDİGO
