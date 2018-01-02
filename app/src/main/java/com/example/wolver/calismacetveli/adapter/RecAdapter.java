@@ -12,12 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wolver.calismacetveli.R;
 import com.example.wolver.calismacetveli.data.Provider;
 import com.example.wolver.calismacetveli.data.Sabitler;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 //1-public class "RecyclerAdapter" extends RecyclerView.Adapter<> !!!!!!SON<> BOŞ
 //2-public class "Holder" extends RecyclerView.ViewHolder. EN SONDA
@@ -53,33 +58,48 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        Date simdi = new Date();
+        Date tarih = null;
 
-        // "" koymamızın sebebi çıkan sonucu integer yapmak.
+        try {
+            tarih = df.parse(tumCetvelListesi.get(position).getTarih());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         holder.mTextTarih.setText(tumCetvelListesi.get(position).getTarih());
         holder.mTextİcerik.setText(tumCetvelListesi.get(position).getAciklama());
 
         if (holder.mTextİcerik.getText().equals("")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK #546e7a
+            holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));//ANA RENK
             holder.mTextİcerik.setTextColor(Color.parseColor("#AD1457"));//KIRMIZI
             holder.mTextTarih.setTextColor(Color.parseColor("#AD1457"));//KIRMIZI
         }
 
         if (holder.mTextİcerik.getText().equals("Cumartesi") || holder.mTextİcerik.getText().equals("Pazar")) {
-//            holder.itemView.setBackgroundColor(Color.parseColor("#FF263238"));//colorSecondary2TransparanTacha
             holder.itemView.setBackgroundColor(Color.parseColor("#E6212121"));
             holder.mTextİcerik.setTextColor(Color.parseColor("#030404"));//colorPrimaryDarkgreen
             holder.mTextTarih.setTextColor(Color.parseColor("#030404"));//colorPrimaryDarkgreen
         }
 
         if (holder.mTextİcerik.getText().toString().contains("Dosya")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
+            if (tarih.getTime() < simdi.getTime()) {
+                holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
+            } else {
+                holder.itemView.setBackgroundColor(Color.parseColor("#E6263238"));
+            }
             holder.mTextİcerik.setTextColor(Color.parseColor("#C7BB5C"));//colorSecondary2Tacha
             holder.mTextTarih.setTextColor(Color.parseColor("#C7BB5C"));//colorSecondary2Tacha
         }
 
         if (holder.mTextİcerik.getText().toString().contains("Yolculuk") || holder.mTextİcerik.getText().toString().contains
                 ("Konaklama")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
+            if (tarih.getTime() < simdi.getTime()) {
+                holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
+            } else {
+                holder.itemView.setBackgroundColor(Color.parseColor("#E6263238"));
+            }
             holder.mTextİcerik.setTextColor(Color.parseColor("#19ACF3"));//colorSecondaryDodgerBlue
             holder.mTextTarih.setTextColor(Color.parseColor("#19ACF3"));//colorSecondaryDodgerBlue
         }
@@ -87,7 +107,11 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
 
         if (holder.mTextİcerik.getText().toString().contains("Teftiş") || holder.mTextİcerik.getText().toString().contains
                 ("Bildirim")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
+            if (tarih.getTime() < simdi.getTime()) {
+                holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
+            } else {
+                holder.itemView.setBackgroundColor(Color.parseColor("#E6263238"));
+            }
             holder.mTextİcerik.setTextColor(Color.parseColor("#D6D7D6"));//WHİTESMOKE
             holder.mTextTarih.setTextColor(Color.parseColor("#D6D7D6"));//WHİTESMOKE
         }
@@ -95,13 +119,21 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
 
         if (holder.mTextİcerik.getText().toString().contains("Rapor") || holder.mTextİcerik.getText().toString().contains
                 ("Yazı")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
+            if (tarih.getTime() < simdi.getTime()) {
+                holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
+            } else {
+                holder.itemView.setBackgroundColor(Color.parseColor("#E6263238"));
+            }
             holder.mTextİcerik.setTextColor(Color.parseColor("#43A047"));//YEŞİL
             holder.mTextTarih.setTextColor(Color.parseColor("#43A047"));//YEŞİL
         }
 
         if (holder.mTextİcerik.getText().toString().contains("Diğer")) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
+            if (tarih.getTime() < simdi.getTime()) {
+                holder.itemView.setBackgroundColor(Color.parseColor("#E6424242"));//ANA RENK
+            } else {
+                holder.itemView.setBackgroundColor(Color.parseColor("#E6263238"));
+            }
             holder.mTextİcerik.setTextColor(Color.parseColor("#5C6BC0"));//İNDİGO
             holder.mTextTarih.setTextColor(Color.parseColor("#5C6BC0"));//İNDİGO
         }
@@ -161,7 +193,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
     }
 
 
-    public void swipeIleYoket (final int position) {
+    public void swipeIleYoket(final int position) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
         final int pozisyon = position;
@@ -177,7 +209,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
                         String silinecekTr = silinecek.getTarih();
 
                         String selection = Sabitler.TblCetvelClass.CETVEL_ID + " = " + silinecekID;
-                        int etkilenen = contentResolver.delete(Provider.CETVEL_CONTENT_URI,  selection, null);
+                        int etkilenen = contentResolver.delete(Provider.CETVEL_CONTENT_URI, selection, null);
 
                         if (etkilenen != 0) {
                         }
