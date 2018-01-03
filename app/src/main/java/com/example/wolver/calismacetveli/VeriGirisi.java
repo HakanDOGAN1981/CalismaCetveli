@@ -97,8 +97,8 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
                     if (mSpinnerTur1.getSelectedItemPosition() == 8) {
                         mTxtGider1.setText("Diğer: ");
-                        mTxtGider1.requestFocus();
-                        mTxtGider1.setSelection(mTxtGider1.length());
+                        mTxtAciklama1.requestFocus();
+                        mTxtAciklama1.setSelection(mTxtAciklama1.length());
                     }
 
                 }
