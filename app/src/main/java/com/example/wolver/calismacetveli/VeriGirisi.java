@@ -361,25 +361,25 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
                         if (spinnerGelen != null) {
                             switch (spinnerGelen) {
-                                case "Yolculuk":
+                                case "Teftiş":
                                     gelenPosition = 1;
                                     break;
-                                case "Konaklama":
+                                case "Rapor":
                                     gelenPosition = 2;
                                     break;
-                                case "Dosya İncelemesi":
+                                case "Yazı":
                                     gelenPosition = 3;
                                     break;
-                                case "Teftiş":
+                                case "Bildirim":
                                     gelenPosition = 4;
                                     break;
-                                case "Bildirim":
+                                case "Yolculuk":
                                     gelenPosition = 5;
                                     break;
-                                case "Rapor":
+                                case "Konaklama":
                                     gelenPosition = 6;
                                     break;
-                                case "Yazı":
+                                case "Dosya İncelemesi":
                                     gelenPosition = 7;
                                     break;
                                 case "Diğer":
