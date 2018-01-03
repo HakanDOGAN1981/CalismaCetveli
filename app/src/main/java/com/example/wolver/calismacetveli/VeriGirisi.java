@@ -358,7 +358,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                 if (cursor.moveToFirst()) {
                     try {
                         String spinnerGelen = cursor.getString(cursor.getColumnIndex(Sabitler.TblCetvelClass.CETVEL_TUR_1));
-
+                        Toast.makeText(context, spinnerGelen, Toast.LENGTH_LONG).show();
                         if (spinnerGelen != null) {
                             switch (spinnerGelen) {
                                 case "Teftiş":
@@ -386,6 +386,8 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                                     gelenPosition = 8;
                                     break;
                             }
+                        } else {
+                            gelenPosition = 0;
                         }
 
                         mSpinnerTur1.setOnItemSelectedListener(null);

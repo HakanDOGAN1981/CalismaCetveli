@@ -159,6 +159,8 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.Holder> implemen
 
                         ContentValues values = new ContentValues();
                         values.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, "");
+                        values.put(Sabitler.TblCetvelClass.CETVEL_GIDER_1, "");
+                        values.put(Sabitler.TblCetvelClass.CETVEL_TUR_1, "");
 
                         Liste silinecek = tumCetvelListesi.get(position);
                         int silinecekID = silinecek.getId();
