@@ -124,7 +124,7 @@ public class SuzgecFragment extends android.support.v4.app.DialogFragment {
                 } else if (mSpinnerYil.getSelectedItemPosition() != 0 && mSpinnerAy.getSelectedItemPosition() != 0) {
                     suz();
                 } else
-                    Toast.makeText(getContext(), "Ay ve Yıl Değerleri \nDolu veya Boş " +
+                    Toast.makeText(getContext(), "Ay ve Yıl Değerleri \n\nDolu veya Boş " +
                             "Olmalıdır!", Toast.LENGTH_LONG).show();
             }
         });

@@ -151,7 +151,7 @@ public class Analiz extends AppCompatActivity {
         String[] projection = {Sabitler.TblCetvelClass.CETVEL_ID, Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1, Sabitler
                 .TblCetvelClass.CETVEL_ACIKLAMA_1};
         String selection = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " LIKE ? AND " + Sabitler.TblCetvelClass
-                .CETVEL_ACIKLAMA_1 + " LIKE ?";
+                .CETVEL_TUR_1+ " LIKE ?";
 
         String suzTef = "Teftiş";
         String[] argsTef = {"%." + ay + "." + yil + "%", "%" + suzTef + "%"};

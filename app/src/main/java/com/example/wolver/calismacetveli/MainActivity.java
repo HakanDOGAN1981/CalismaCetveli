@@ -365,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle("Dikkat!")
                 .setIcon(R.drawable.ic_announcement)
-                .setMessage("Yedeği Alınmış Olan" + "\n" + "Son Veri Tabanı Yüklenecektir." + "\n" + "Devam Edilsin mi?")
+                .setMessage("Yedeği Alınmış Olan" + "\n" + "\n" + "Son Veri Tabanı Yüklenecektir." + "\n" + "\n" + "Devam Edilsin mi?")
                 .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -513,8 +513,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
             alertDialog.setTitle("Dikkat!")
                     .setIcon(R.drawable.ic_announcement)
-                    .setMessage("Seçmiş Olduğunuz Ay" + "\n" + "Veri Tabanında Mevcut Değildir" +
-                            "." + "\n" + "Veriler Oluşturulsun mu?")
+                    .setMessage("Seçmiş Olduğunuz Ay" + "\n" + "\n" + "Veri Tabanında Mevcut Değildir" +
+                            "." + "\n" + "\n" + "Veriler Oluşturulsun mu?")
                     .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -606,7 +606,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle("Dikkat!")
                 .setIcon(R.drawable.ic_announcement)
-                .setMessage("Tüm Veri Tabanı Silinecektir." + "\n" + "Geri Dönüş Mümkün Değildir." + "\n" + "Tüm Veriler " +
+                .setMessage("Tüm Veri Tabanı Silinecektir." + "\n" + "\n" + "Geri Dönüş Mümkün Değildir." + "\n" + "\n" + "Tüm Veriler " +
                         "Silinsin mi?")
                 .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
                     @Override
@@ -627,8 +627,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle("Dikkat!")
                 .setIcon(R.drawable.ic_announcement)
-                .setMessage("Seçmiş Olduğunuz Ay" + "\n" + "Veri Tabanından Silinecektir." +
-                        "." + "\n" + "Veriler Silinsin mi?")
+                .setMessage("Seçmiş Olduğunuz Ay" + "\n" + "\n" + "Veri Tabanından Silinecektir." +
+                        "." + "\n" + "\n" + "Veriler Silinsin mi?")
                 .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
