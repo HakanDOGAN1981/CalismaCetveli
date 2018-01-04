@@ -1,15 +1,18 @@
 package com.example.wolver.calismacetveli;
 
 
+import android.content.Context;
+import android.widget.Toast;
+
 import java.util.Calendar;
 import java.util.Locale;
 
 public class Tarihler {
 
     static Calendar simdi, calendar;
-    static int month, simdiAyInt, simdiYilInt, ilkGunInt, ilkCumartesiInt, aydakiGunSayısıInt, simdiGunInt,
-            ilkCumartesiGerekliGunInt;
-    static String simdiSonAyStr, ilkGunStr, aydakiGunSayısıStr, simdiSonGunStr, simdiYilStr;
+    static int month, simdiYilInt, simdiAyInt, ilkGunInt, ilkCumartesiInt, aydakiGunSayısıInt, simdiGunInt,
+            ilkCumartesiGerekliGunInt, ayInt, simdiAydakiGunSayısıInt;
+    static String simdiSonAyStr, ilkGunStr, aydakiGunSayısıStr, simdiSonGunStr, simdiYilStr, ayStr;
     static String[] simdiStrDizi;
     static Integer[] ayinGunleriDizi;
 
@@ -41,7 +44,13 @@ public class Tarihler {
     public static Integer[] ayinGunleri() {
         calendar = Calendar.getInstance();
         month = calendar.get(Calendar.MONTH);
-        simdiAyInt = month + 1;
+//        simdiAyInt = month + 1;
+        ayStr = VeriGirisi.ayStr;
+        ayInt = 0;
+        try {
+            ayInt = Integer.parseInt(ayStr);
+        } catch (Exception e) {
+        }
 
         //AYIN İLK GÜNÜNÜ BULMAK(STRING)
         calendar.set(Calendar.DATE, 1);
@@ -54,19 +63,29 @@ public class Tarihler {
         ilkCumartesiInt = 1 + ilkCumartesiGerekliGunInt;
         //AYIN İLK GÜNÜNÜ BULMAK(INT)
 
-        if (simdiAyInt == 1 || simdiAyInt == 3 || simdiAyInt == 5 || simdiAyInt == 7 || simdiAyInt == 8 || simdiAyInt == 10 || simdiAyInt == 12) {
+        if (ayInt == 1 || ayInt == 3 || ayInt == 5 || ayInt == 7 || ayInt == 8 || ayInt == 10 || ayInt == 12) {
             aydakiGunSayısıInt = 31;
-        } else if (simdiAyInt == 4 || simdiAyInt == 6 || simdiAyInt == 9 || simdiAyInt == 11) {
+        } else if (ayInt == 4 || ayInt == 6 || ayInt == 9 || ayInt == 11) {
             aydakiGunSayısıInt = 30;
-        } else if (simdiAyInt == 2 && simdiAyInt % 4 == 0) {
+        } else if (ayInt == 2 && ayInt % 4 == 0) {
             aydakiGunSayısıInt = 29;
         } else {
             aydakiGunSayısıInt = 28;
         }
 
+        if (simdiAyInt == 1 || simdiAyInt == 3 || simdiAyInt == 5 || simdiAyInt == 7 || simdiAyInt == 8 || simdiAyInt == 10 || simdiAyInt == 12) {
+            simdiAydakiGunSayısıInt = 31;
+        } else if (simdiAyInt == 4 || simdiAyInt == 6 || simdiAyInt == 9 || simdiAyInt == 11) {
+            simdiAydakiGunSayısıInt = 30;
+        } else if (simdiAyInt == 2 && simdiAyInt % 4 == 0) {
+            simdiAydakiGunSayısıInt = 29;
+        } else {
+            simdiAydakiGunSayısıInt = 28;
+        }
+
         aydakiGunSayısıStr = String.valueOf(aydakiGunSayısıInt);
 
-        return ayinGunleriDizi = new Integer[]{aydakiGunSayısıInt, ilkCumartesiInt};
+        return ayinGunleriDizi = new Integer[]{aydakiGunSayısıInt, ilkCumartesiInt, simdiAydakiGunSayısıInt};
 
     }
 

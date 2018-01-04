@@ -36,7 +36,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
     public static AutoCompleteTextView mTxtAciklama1, mTxtGider1;
     public static Spinner mSpinnerTur1;
-
+    public static String ayStr;
 
     Button mBtnBas1, mBtnBit1;
     Context context = this;
@@ -439,11 +439,15 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
     }
 
     public void yeniVeriGirisi() {
+        ayStr = mBtnBas1.getText().toString().substring(3, 5);
 
         cursorCount2 = yeniVeriTarihiVarMı();
 
         if (mSpinnerTur1.getSelectedItemPosition() == 0) {
             Toast.makeText(getApplicationContext(), "Yeni Kayıt Yapabilmek İçin" + "\n" + "\n" + "Bir Giriş Türü Seçmelisiniz!", Toast
+                    .LENGTH_SHORT).show();
+        } else if (mBtnBas1.getText().equals("Tarih Seçiniz")) {
+            Toast.makeText(getApplicationContext(), "Yeni Kayıt Yapabilmek İçin" + "\n" + "\n" + "Bir Tarih Seçmelisiniz!", Toast
                     .LENGTH_SHORT).show();
         } else {
             if (cursorCount2 == 0) {
@@ -529,6 +533,8 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
     public void yeniVeriTarihYoksaListeOlustur() {
         simdiStrDizi = Tarihler.simdiOlustur();
         ayinGunleriDizi = Tarihler.ayinGunleri();
+
+        Toast.makeText(context, "" + ayinGunleriDizi[0], Toast.LENGTH_LONG).show();
 
         String mBtnStr = mBtnBas1.getText().toString();
         String mBtnGun = mBtnStr.substring(0, 2);

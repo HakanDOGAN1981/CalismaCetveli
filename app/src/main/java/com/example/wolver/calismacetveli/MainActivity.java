@@ -497,7 +497,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         simdiStrDizi = Tarihler.simdiOlustur();
         ayinGunleriDizi = Tarihler.ayinGunleri();
-
         guncel_Tarih_Yoksa_VeriOlustur_Devam();
     }
 
@@ -522,7 +521,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             ContentValues contentValues = new ContentValues();
 
                             String soni2;
-                            for (int i2 = 1; i2 <= ayinGunleriDizi[0]; i2++) {
+                            for (int i2 = 1; i2 <= ayinGunleriDizi[2]; i2++) {
 
                                 if (String.valueOf(i2).length() < 2) {
                                     soni2 = String.valueOf(i2);
@@ -540,7 +539,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String soni3;
                             ContentValues contentValues2 = new ContentValues();
 
-                            for (int i3 = ayinGunleriDizi[1]; i3 <= ayinGunleriDizi[0]; i3 += 7) {
+                            for (int i3 = ayinGunleriDizi[1]; i3 <= ayinGunleriDizi[2]; i3 += 7) {
                                 if (String.valueOf(i3).length() < 2) {
                                     soni3 = String.valueOf(i3);
                                     soni3 = "0" + soni3;
@@ -558,7 +557,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String soni4;
                             ContentValues contentValues3 = new ContentValues();
 
-                            for (int i4 = ayinGunleriDizi[1] + 1; i4 <= ayinGunleriDizi[0]; i4 = i4 + 7) {
+                            for (int i4 = ayinGunleriDizi[1] + 1; i4 <= ayinGunleriDizi[2]; i4 = i4 + 7) {
                                 if (String.valueOf(i4).length() < 2) {
                                     soni4 = String.valueOf(i4);
                                     soni4 = "0" + soni4;
