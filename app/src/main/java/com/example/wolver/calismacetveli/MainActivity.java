@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<Liste> tumCetvelListe = new ArrayList<>();
     ArrayList<Liste> suzTumCetvelListe = new ArrayList<>();
 
-    int shrGelenInt;
+    int shrGelenInt, simdiCumartesiInt;
     String shrGelenTur;
     String shrTrAy;
     String shrTrYil;
@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     int mTxtAyInt;
 
-    String[] simdiStrDizi = new String[3];
-    Integer[] ayinGunleriDizi = new Integer[2];
+    String[] simdiStrDizi;
+    Integer[] ayinGunleriDizi;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -497,6 +497,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         simdiStrDizi = Tarihler.simdiOlustur();
         ayinGunleriDizi = Tarihler.ayinGunleri();
+        simdiCumartesiInt = Tarihler.simdiCumartesi();
         guncel_Tarih_Yoksa_VeriOlustur_Devam();
     }
 
@@ -539,7 +540,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String soni3;
                             ContentValues contentValues2 = new ContentValues();
 
-                            for (int i3 = ayinGunleriDizi[1]; i3 <= ayinGunleriDizi[2]; i3 += 7) {
+                            Toast.makeText(context, String.valueOf(simdiCumartesiInt),Toast.LENGTH_LONG).show();
+
+                            for (int i3 = simdiCumartesiInt; i3 <= ayinGunleriDizi[2]; i3 += 7) {
                                 if (String.valueOf(i3).length() < 2) {
                                     soni3 = String.valueOf(i3);
                                     soni3 = "0" + soni3;
@@ -557,7 +560,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String soni4;
                             ContentValues contentValues3 = new ContentValues();
 
-                            for (int i4 = ayinGunleriDizi[1] + 1; i4 <= ayinGunleriDizi[2]; i4 = i4 + 7) {
+                            for (int i4 = simdiCumartesiInt + 1; i4 <= ayinGunleriDizi[2]; i4 = i4 + 7) {
                                 if (String.valueOf(i4).length() < 2) {
                                     soni4 = String.valueOf(i4);
                                     soni4 = "0" + soni4;
@@ -590,6 +593,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             mtxtAy.setText(simdiStrDizi[1]);
         }
+
+        sharedPrefencesOlustur();
     }
 
     public void sharedPrefencesAl_VeriSuz() {
@@ -600,6 +605,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         shrTrAy = preferences.getString("shrAy", "Sonuç Yok");
         shrTrYil = preferences.getString("shrYil", "Sonuç Yok");
     }
+
+    public void sharedPrefencesOlustur() {
+
+        SharedPreferences preferences = getSharedPreferences("share", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putInt("secilen", 1);
+        editor.putString("shrAy", simdiStrDizi[1]);
+        editor.putString("shrYil", simdiStrDizi[2]);
+
+        editor.commit();
+    }
+
 
     private void veriTabanınıSil() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);

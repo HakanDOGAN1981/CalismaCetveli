@@ -1,18 +1,18 @@
 package com.example.wolver.calismacetveli;
 
-
-import android.content.Context;
-import android.widget.Toast;
-
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class Tarihler {
 
     static Calendar simdi, calendar;
-    static int month, simdiYilInt, simdiAyInt, ilkGunInt, ilkCumartesiInt, aydakiGunSayısıInt, simdiGunInt,
-            ilkCumartesiGerekliGunInt, ayInt, simdiAydakiGunSayısıInt;
-    static String simdiSonAyStr, ilkGunStr, aydakiGunSayısıStr, simdiSonGunStr, simdiYilStr, ayStr;
+    public static int month, simdiYilInt, simdiAyInt, ilkGunInt, ilkCumartesiInt, aydakiGunSayısıInt, simdiGunInt,
+            ilkCumartesiGerekliGunInt, ayInt, simdiAydakiGunSayısıInt, gunInt, yilInt, simdiCumartesi;
+    public static String simdiSonAyStr, aydakiGunSayısıStr, simdiSonGunStr, simdiYilStr, ayStr, gunStr, yilStr;
     static String[] simdiStrDizi;
     static Integer[] ayinGunleriDizi;
 
@@ -41,26 +41,90 @@ public class Tarihler {
         return simdiStrDizi = new String[]{simdiSonGunStr, simdiSonAyStr, simdiYilStr};
     }
 
+    public static Integer simdiCumartesi() {
+        simdi = Calendar.getInstance();
+
+        simdiGunInt = simdi.get(Calendar.DAY_OF_MONTH);
+        month = simdi.get(Calendar.MONTH);
+        simdiAyInt = month + 1;
+        simdiYilInt = simdi.get(Calendar.YEAR);
+
+        if (String.valueOf(simdiGunInt).length() < 2) {
+            simdiSonGunStr = "0" + String.valueOf(simdiGunInt);
+        } else {
+            simdiSonGunStr = String.valueOf(simdiGunInt);
+        }
+
+        if (String.valueOf(simdiAyInt).length() < 2) {
+            simdiSonAyStr = "0" + String.valueOf(simdiAyInt);
+        } else {
+            simdiSonAyStr = String.valueOf(simdiAyInt);
+        }
+
+        simdiYilStr = String.valueOf(simdiYilInt);
+
+//////////////////////////////////////////////////////////////////////////////
+        DateFormat df = new SimpleDateFormat("dd.MM.yyy");
+        try {
+            Date date = df.parse(simdiSonGunStr + "." + simdiSonAyStr + "." + simdiYilStr);
+            calendar.setTime(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        ilkGunInt = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+
+        if (ilkGunInt == 0) {
+            ilkGunInt = 7;
+        }
+
+        ilkCumartesiGerekliGunInt = 7 - ilkGunInt;
+
+        if (ilkCumartesiGerekliGunInt == 6) {
+            ilkCumartesiInt = ilkCumartesiGerekliGunInt;
+        } else {
+            ilkCumartesiInt = ilkCumartesiGerekliGunInt;
+        }
+
+
+        return simdiCumartesi = ilkCumartesiInt;
+    }
+
     public static Integer[] ayinGunleri() {
         calendar = Calendar.getInstance();
-        month = calendar.get(Calendar.MONTH);
-//        simdiAyInt = month + 1;
-        ayStr = VeriGirisi.ayStr;
+
+        gunStr = VeriGirisi.btnStrDizi[0];
+        ayStr = VeriGirisi.btnStrDizi[1];
+        yilStr = VeriGirisi.btnStrDizi[2];
+
+        gunInt = 0;
         ayInt = 0;
+        yilInt = 0;
+
         try {
+            gunInt = Integer.parseInt(gunStr);
             ayInt = Integer.parseInt(ayStr);
+            yilInt = Integer.parseInt(yilStr);
         } catch (Exception e) {
         }
 
-        //AYIN İLK GÜNÜNÜ BULMAK(STRING)
-        calendar.set(Calendar.DATE, 1);
-        ilkGunStr = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
-        //AYIN İLK GÜNÜNÜ BULMAK(STRING)
+        DateFormat df = new SimpleDateFormat("dd.MM.yyy");
+        try {
+            Date date = df.parse(gunStr + "." + ayStr + "." + yilStr);
+            calendar.setTime(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        //AYIN İLK GÜNÜNÜ BULMAK(INT)-HAFTALIK DEĞER
         ilkGunInt = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-        ilkCumartesiGerekliGunInt = 6 - ilkGunInt;
-        ilkCumartesiInt = 1 + ilkCumartesiGerekliGunInt;
+
+        if (ilkGunInt == 0) {
+            ilkGunInt = 7;
+        }
+
+        ilkCumartesiGerekliGunInt = 7 - ilkGunInt;
+        ilkCumartesiInt = ilkCumartesiGerekliGunInt;
+
         //AYIN İLK GÜNÜNÜ BULMAK(INT)
 
         if (ayInt == 1 || ayInt == 3 || ayInt == 5 || ayInt == 7 || ayInt == 8 || ayInt == 10 || ayInt == 12) {
@@ -85,8 +149,6 @@ public class Tarihler {
 
         aydakiGunSayısıStr = String.valueOf(aydakiGunSayısıInt);
 
-        return ayinGunleriDizi = new Integer[]{aydakiGunSayısıInt, ilkCumartesiInt, simdiAydakiGunSayısıInt};
-
+        return ayinGunleriDizi = new Integer[]{aydakiGunSayısıInt, ilkCumartesiInt, simdiAydakiGunSayısıInt, ilkGunInt, ayInt};
     }
-
 }

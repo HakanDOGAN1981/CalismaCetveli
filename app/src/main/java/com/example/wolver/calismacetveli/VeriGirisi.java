@@ -36,10 +36,11 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
     public static AutoCompleteTextView mTxtAciklama1, mTxtGider1;
     public static Spinner mSpinnerTur1;
-    public static String ayStr;
+    public static String ayStr, gunStr, yilStr;
+    public static String[] btnStrDizi = {"1", "1", "1"};
 
     Button mBtnBas1, mBtnBit1;
-    Context context = this;
+    public Context context = this;
     TextView mtxt;
     int gelenID;
     int cursorCount2;
@@ -438,8 +439,18 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void yeniVeriGirisi() {
+    public String[] btnAyGunYil() {
+
+        gunStr = mBtnBas1.getText().toString().substring(0, 2);
         ayStr = mBtnBas1.getText().toString().substring(3, 5);
+        yilStr = mBtnBas1.getText().toString().substring(6, mBtnBas1.getText().toString().length());
+
+        return btnStrDizi = new String[]{gunStr, ayStr, yilStr};
+    }
+
+    public void yeniVeriGirisi() {
+
+        btnAyGunYil();
 
         cursorCount2 = yeniVeriTarihiVarMı();
 
@@ -451,9 +462,9 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                     .LENGTH_SHORT).show();
         } else {
             if (cursorCount2 == 0) {
+                sharedPrefencesOlustur();
                 yeniVeriTarihYoksaListeOlustur();
                 yeniVerileriGir();
-                sharedPrefencesOlustur();
 
             } else {
                 yeniVerileriGir();
@@ -534,7 +545,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
         simdiStrDizi = Tarihler.simdiOlustur();
         ayinGunleriDizi = Tarihler.ayinGunleri();
 
-        Toast.makeText(context, "" + ayinGunleriDizi[0], Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Ayın İlk Günü: " + ayinGunleriDizi[3], Toast.LENGTH_LONG).show();
 
         String mBtnStr = mBtnBas1.getText().toString();
         String mBtnGun = mBtnStr.substring(0, 2);
@@ -610,6 +621,10 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                     Toast.LENGTH_LONG).show();
         }
         cursor.close();
+
+
+        Intent main = new Intent(context, MainActivity.class);
+        startActivity(main);
     }
 
 
