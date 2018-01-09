@@ -47,6 +47,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static String ayAnaliz;
     Context context = this;
     Toolbar mToolbar;
     ImageView mImg;
@@ -54,27 +55,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button mYeniVeri;
     TextView mtxtAy;
     ImageButton mImgIleri, mImgGeri;
-
     RecyclerView mRecyclerView;
-
     RecAdapter mRecAdapter;
-
     //    BOŞ ARRAYLIST TANIMLARKEN NULL DEDİĞİNDE HATA ALIRSIN
     //    NULL KULLANMAYACAKSIN YERİNE
     //    NEW ARRAYLIST<>(); ŞEKLİNDE OLACAK
     ArrayList<Liste> tumCetvelListe = new ArrayList<>();
     ArrayList<Liste> suzTumCetvelListe = new ArrayList<>();
-
     int shrGelenInt, simdiCumartesiInt;
     String shrGelenTur;
     String shrTrAy;
     String shrTrYil;
-
-    public static String ayAnaliz;
-
     int mTxtAyInt;
 
-    String[] simdiStrDizi;
+    String[] simdiStrDizi, ayinGunleriDiziStr;
     Integer[] ayinGunleriDizi;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -260,7 +254,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mtxtAy.setText("" + mTxtAyInt);
                 ayAnaliz = "" + mTxtAyInt;
             }
-
             ileri_Geri_Ay();
         }
 
@@ -311,6 +304,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setAdapter(mRecAdapter);
         mRecAdapter.notifyDataSetChanged();
 
+        sharedPrefencesOlustur2();
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("analiz", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -497,6 +491,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         simdiStrDizi = Tarihler.simdiOlustur();
         ayinGunleriDizi = Tarihler.ayinGunleri();
+        ayinGunleriDiziStr = Tarihler.ayinGunleriStr();
         simdiCumartesiInt = Tarihler.simdiCumartesi();
         guncel_Tarih_Yoksa_VeriOlustur_Devam();
     }
@@ -540,8 +535,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String soni3;
                             ContentValues contentValues2 = new ContentValues();
 
-                            Toast.makeText(context, String.valueOf(simdiCumartesiInt),Toast.LENGTH_LONG).show();
-
                             for (int i3 = simdiCumartesiInt; i3 <= ayinGunleriDizi[2]; i3 += 7) {
                                 if (String.valueOf(i3).length() < 2) {
                                     soni3 = String.valueOf(i3);
@@ -551,7 +544,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
 
                                 String select = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " = ?";
-                                String[] args = {soni3 + "." + simdiStrDizi[1] + "." + simdiStrDizi[2]};
+                                String[] args = {soni3 + "." + simdiStrDizi[1].toString() + "." + simdiStrDizi[2].toString()};
 
                                 contentValues2.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, "Cumartesi");
                                 getContentResolver().update(Provider.CETVEL_CONTENT_URI, contentValues2, select, args);
@@ -560,7 +553,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String soni4;
                             ContentValues contentValues3 = new ContentValues();
 
-                            for (int i4 = simdiCumartesiInt + 1; i4 <= ayinGunleriDizi[2]; i4 = i4 + 7) {
+                            int simdipazar;
+                            if (simdiCumartesiInt == 7) {
+                                simdipazar = 1;
+                            } else {
+                                simdipazar = simdiCumartesiInt + 1;
+                            }
+
+                            for (int i4 = simdipazar; i4 <= ayinGunleriDizi[2]; i4 = i4 + 7) {
                                 if (String.valueOf(i4).length() < 2) {
                                     soni4 = String.valueOf(i4);
                                     soni4 = "0" + soni4;
@@ -568,11 +568,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     soni4 = String.valueOf(i4);
                                 }
                                 String select = Sabitler.TblCetvelClass.CETVEL_TARIH_BAS_1 + " = ?";
-                                String[] args = {soni4 + "." + simdiStrDizi[1] + "." + simdiStrDizi[2]};
+                                String[] args = {soni4 + "." + simdiStrDizi[1].toString() + "." + simdiStrDizi[2]
+                                        .toString()};
 
                                 contentValues3.put(Sabitler.TblCetvelClass.CETVEL_ACIKLAMA_1, "Pazar");
                                 getContentResolver().update(Provider.CETVEL_CONTENT_URI, contentValues3, select, args);
                             }
+
+                            sharedPrefencesOlustur();
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
@@ -594,7 +597,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mtxtAy.setText(simdiStrDizi[1]);
         }
 
-        sharedPrefencesOlustur();
     }
 
     public void sharedPrefencesAl_VeriSuz() {
@@ -618,6 +620,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.commit();
     }
 
+    public void sharedPrefencesOlustur2() {
+
+        SharedPreferences preferences = getSharedPreferences("share", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putInt("secilen", 1);
+        editor.putString("shrAy", mtxtAy.getText().toString());
+        editor.putString("shrYil", simdiStrDizi[2]);
+
+        editor.commit();
+    }
 
     private void veriTabanınıSil() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);

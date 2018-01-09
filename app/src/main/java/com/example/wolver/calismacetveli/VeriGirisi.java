@@ -38,9 +38,8 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
     public static Spinner mSpinnerTur1;
     public static String ayStr, gunStr, yilStr;
     public static String[] btnStrDizi = {"1", "1", "1"};
-
-    Button mBtnBas1, mBtnBit1;
     public Context context = this;
+    Button mBtnBas1, mBtnBit1;
     TextView mtxt;
     int gelenID;
     int cursorCount2;
@@ -467,6 +466,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
                 yeniVerileriGir();
 
             } else {
+                sharedPrefencesOlustur();
                 yeniVerileriGir();
             }
         }
@@ -485,6 +485,8 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
     }
 
     public void guncelle() {
+
+        btnAyGunYil();
 
         if (mSpinnerTur1.getSelectedItemPosition() == 0) {
             Toast.makeText(getApplicationContext(), "Güncelleme Yapabilmek İçin" + "\n" + "\n" + "Bir Giriş Türü Seçmelisiniz!", Toast.LENGTH_SHORT)
@@ -535,8 +537,8 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putInt("secilen", 1);
-        editor.putString("shrAy", mBtnBas1.getText().toString().substring(3, 5));
-        editor.putString("shrYil", mBtnBas1.getText().toString().substring(6, mBtnBas1.getText().length()));
+        editor.putString("shrAy", btnStrDizi[1].toString());
+        editor.putString("shrYil", btnStrDizi[2].toString());
 
         editor.commit();
     }
@@ -545,10 +547,7 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
         simdiStrDizi = Tarihler.simdiOlustur();
         ayinGunleriDizi = Tarihler.ayinGunleri();
 
-        Toast.makeText(context, "Ayın İlk Günü: " + ayinGunleriDizi[3], Toast.LENGTH_LONG).show();
-
         String mBtnStr = mBtnBas1.getText().toString();
-        String mBtnGun = mBtnStr.substring(0, 2);
         final String mBtnAy = mBtnStr.substring(3, 5);
         final String mBtnYil = mBtnStr.substring(6, mBtnStr.length());
 
@@ -616,9 +615,6 @@ public class VeriGirisi extends AppCompatActivity implements View.OnClickListene
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
-
-            Toast.makeText(context, "Girilen Veri Tarihi Bulunmadığı İçin \n Girilen Ay Oluşturulmuştur." + ayinGunleriDizi[0],
-                    Toast.LENGTH_LONG).show();
         }
         cursor.close();
 

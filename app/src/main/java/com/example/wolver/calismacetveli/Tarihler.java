@@ -5,15 +5,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class Tarihler {
 
-    static Calendar simdi, calendar;
     public static int month, simdiYilInt, simdiAyInt, ilkGunInt, ilkCumartesiInt, aydakiGunSayısıInt, simdiGunInt,
             ilkCumartesiGerekliGunInt, ayInt, simdiAydakiGunSayısıInt, gunInt, yilInt, simdiCumartesi;
     public static String simdiSonAyStr, aydakiGunSayısıStr, simdiSonGunStr, simdiYilStr, ayStr, gunStr, yilStr;
-    static String[] simdiStrDizi;
+    static Calendar simdi, calendar;
+    static String[] simdiStrDizi, ayinGunleriDiziStr;
     static Integer[] ayinGunleriDizi;
 
     public static String[] simdiOlustur() {
@@ -78,14 +77,9 @@ public class Tarihler {
             ilkGunInt = 7;
         }
 
-        ilkCumartesiGerekliGunInt = 7 - ilkGunInt;
 
-        if (ilkCumartesiGerekliGunInt == 6) {
-            ilkCumartesiInt = ilkCumartesiGerekliGunInt;
-        } else {
-            ilkCumartesiInt = ilkCumartesiGerekliGunInt;
-        }
-
+        ilkCumartesiGerekliGunInt = 8 - ilkGunInt;
+        ilkCumartesiInt = ilkCumartesiGerekliGunInt;
 
         return simdiCumartesi = ilkCumartesiInt;
     }
@@ -149,6 +143,19 @@ public class Tarihler {
 
         aydakiGunSayısıStr = String.valueOf(aydakiGunSayısıInt);
 
-        return ayinGunleriDizi = new Integer[]{aydakiGunSayısıInt, ilkCumartesiInt, simdiAydakiGunSayısıInt, ilkGunInt, ayInt};
+        return ayinGunleriDizi = new Integer[]{aydakiGunSayısıInt, ilkCumartesiInt, simdiAydakiGunSayısıInt, ilkGunInt, ayInt,
+                yilInt};
     }
+
+
+    public static String[] ayinGunleriStr() {
+        calendar = Calendar.getInstance();
+
+        gunStr = VeriGirisi.btnStrDizi[0];
+        ayStr = VeriGirisi.btnStrDizi[1];
+        yilStr = VeriGirisi.btnStrDizi[2];
+
+        return ayinGunleriDiziStr = new String[]{ayStr, yilStr};
+    }
+
 }
